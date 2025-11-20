@@ -12,7 +12,7 @@ struct Binary64Tests {
     func doubleRoundTrip() {
         let original: Double = 3.14159265358979323846
         let bytes = original.ieee754.bytes()
-        let restored = bytes.ieee754.asDouble()
+        let restored = Double(bytes.ieee754)
 
         #expect(restored == original)
     }
@@ -30,7 +30,7 @@ struct Binary64Tests {
     func doubleBigEndian() {
         let value: Double = 3.14159
         let bytes = value.ieee754.bytes(endianness: .big)
-        let restored = bytes.ieee754.asDouble(endianness: .big)
+        let restored = Double(bytes.ieee754, endianness: .big)
 
         #expect(restored == value)
     }
@@ -48,15 +48,15 @@ struct Binary64Tests {
     func doubleSpecialValues() {
         // Zero
         let zero = (0.0 as Double).ieee754.bytes()
-        #expect(zero.ieee754.asDouble() == 0.0)
+        #expect(Double(bytes: zero) == 0.0)
 
         // Infinity
         let inf = Double.infinity.ieee754.bytes()
-        #expect(inf.ieee754.asDouble() == Double.infinity)
+        #expect(Double(bytes: inf) == Double.infinity)
 
         // NaN
         let nan = Double.nan.ieee754.bytes()
-        #expect(nan.ieee754.asDouble()?.isNaN == true)
+        #expect(Double(bytes: nan)?.isNaN == true)
     }
 }
 
@@ -66,7 +66,7 @@ struct Binary32Tests {
     func floatRoundTrip() {
         let original: Float = 3.14159
         let bytes = original.ieee754.bytes()
-        let restored = bytes.ieee754.asFloat()
+        let restored = Float(bytes.ieee754)
 
         #expect(restored == original)
     }
@@ -84,7 +84,7 @@ struct Binary32Tests {
     func floatBigEndian() {
         let value: Float = 3.14
         let bytes = value.ieee754.bytes(endianness: .big)
-        let restored = bytes.ieee754.asFloat(endianness: .big)
+        let restored = Float(bytes.ieee754, endianness: .big)
 
         #expect(restored == value)
     }
@@ -102,15 +102,15 @@ struct Binary32Tests {
     func floatSpecialValues() {
         // Zero
         let zero = Float(0.0).ieee754.bytes()
-        #expect(zero.ieee754.asFloat() == 0.0)
+        #expect(Float(bytes: zero) == 0.0)
 
         // Infinity
         let inf = Float.infinity.ieee754.bytes()
-        #expect(inf.ieee754.asFloat() == Float.infinity)
+        #expect(Float(bytes: inf) == Float.infinity)
 
         // NaN
         let nan = Float.nan.ieee754.bytes()
-        #expect(nan.ieee754.asFloat()?.isNaN == true)
+        #expect(Float(bytes: nan)?.isNaN == true)
     }
 }
 

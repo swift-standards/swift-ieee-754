@@ -19,7 +19,7 @@ extension [UInt8] {
     public struct IEEE754 {
         public let bytes: [UInt8]
 
-        public init(bytes: [UInt8]) {
+        init(bytes: [UInt8]) {
             self.bytes = bytes
         }
     }
@@ -68,42 +68,6 @@ extension [UInt8].IEEE754 {
         endianness: [UInt8].Endianness = .little
     ) -> [UInt8] {
         IEEE_754.Binary32.bytes(from: value, endianness: endianness)
-    }
-}
-
-// MARK: - Instance Methods (Deserialization)
-
-extension [UInt8].IEEE754 {
-    /// Interprets bytes as IEEE 754 binary64 and returns Double
-    ///
-    /// Convenience that delegates to `IEEE_754.Binary64.value(from:endianness:)`.
-    ///
-    /// - Parameter endianness: Byte order of input bytes
-    /// - Returns: Double value, or nil if bytes.count ≠ 8
-    ///
-    /// Example:
-    /// ```swift
-    /// let value = bytes.ieee754.asDouble()
-    /// let value = bytes.ieee754.asDouble(endianness: .big)
-    /// ```
-    public func asDouble(endianness: [UInt8].Endianness = .little) -> Double? {
-        IEEE_754.Binary64.value(from: bytes, endianness: endianness)
-    }
-
-    /// Interprets bytes as IEEE 754 binary32 and returns Float
-    ///
-    /// Convenience that delegates to `IEEE_754.Binary32.value(from:endianness:)`.
-    ///
-    /// - Parameter endianness: Byte order of input bytes
-    /// - Returns: Float value, or nil if bytes.count ≠ 4
-    ///
-    /// Example:
-    /// ```swift
-    /// let value = bytes.ieee754.asFloat()
-    /// let value = bytes.ieee754.asFloat(endianness: .big)
-    /// ```
-    public func asFloat(endianness: [UInt8].Endianness = .little) -> Float? {
-        IEEE_754.Binary32.value(from: bytes, endianness: endianness)
     }
 }
 

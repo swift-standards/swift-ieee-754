@@ -19,7 +19,7 @@ extension Double {
     public struct IEEE754 {
         public let double: Double
 
-        public init(double: Double) {
+        init(double: Double) {
             self.double = double
         }
     }
