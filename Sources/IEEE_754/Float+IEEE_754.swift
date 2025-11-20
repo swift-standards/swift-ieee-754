@@ -52,28 +52,6 @@ extension Float {
         }
         self = value
     }
-
-    /// Creates Float from namespace-wrapped IEEE 754 binary32 bytes
-    ///
-    /// Convenience init for transforming namespace-wrapped bytes to Float.
-    /// Delegates to `IEEE_754.Binary32.value(from:endianness:)`.
-    ///
-    /// - Parameters:
-    ///   - ieee754: Namespace-wrapped byte array
-    ///   - endianness: Byte order of input bytes
-    /// - Returns: nil if bytes.count ≠ 4
-    ///
-    /// Example:
-    /// ```swift
-    /// let value = Float(bytes.ieee754)
-    /// let value = Float(bytes.ieee754, endianness: .big)
-    /// ```
-    public init?(_ ieee754: [UInt8].IEEE754, endianness: [UInt8].Endianness = .little) {
-        guard let value = IEEE_754.Binary32.value(from: ieee754.bytes, endianness: endianness) else {
-            return nil
-        }
-        self = value
-    }
 }
 
 // MARK: - Type-level Methods

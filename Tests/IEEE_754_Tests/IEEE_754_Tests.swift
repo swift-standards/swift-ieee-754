@@ -12,7 +12,7 @@ struct Binary64Tests {
     func doubleRoundTrip() {
         let original: Double = 3.14159265358979323846
         let bytes = original.ieee754.bytes()
-        let restored = Double(bytes.ieee754)
+        let restored = Double(bytes: bytes)
 
         #expect(restored == original)
     }
@@ -30,7 +30,7 @@ struct Binary64Tests {
     func doubleBigEndian() {
         let value: Double = 3.14159
         let bytes = value.ieee754.bytes(endianness: .big)
-        let restored = Double(bytes.ieee754, endianness: .big)
+        let restored = Double(bytes: bytes, endianness: .big)
 
         #expect(restored == value)
     }
@@ -66,7 +66,7 @@ struct Binary32Tests {
     func floatRoundTrip() {
         let original: Float = 3.14159
         let bytes = original.ieee754.bytes()
-        let restored = Float(bytes.ieee754)
+        let restored = Float(bytes: bytes)
 
         #expect(restored == original)
     }
@@ -84,7 +84,7 @@ struct Binary32Tests {
     func floatBigEndian() {
         let value: Float = 3.14
         let bytes = value.ieee754.bytes(endianness: .big)
-        let restored = Float(bytes.ieee754, endianness: .big)
+        let restored = Float(bytes: bytes, endianness: .big)
 
         #expect(restored == value)
     }
