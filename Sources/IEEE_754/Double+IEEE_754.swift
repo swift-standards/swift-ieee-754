@@ -27,10 +27,10 @@ extension Double {
 
 // MARK: - Type-level Methods
 
-extension Double.IEEE754 {
+extension Double {
     /// Creates Double from IEEE 754 binary64 bytes
     ///
-    /// Convenience that delegates to `IEEE_754.Binary64.value(from:endianness:)`.
+    /// Delegates to `IEEE_754.Binary64.value(from:endianness:)`.
     ///
     /// - Parameters:
     ///   - bytes: 8-byte array in IEEE 754 binary64 format
@@ -39,11 +39,11 @@ extension Double.IEEE754 {
     ///
     /// Example:
     /// ```swift
-    /// let value = Double.ieee754.value(from: bytes)
-    /// let value = Double.ieee754.value(from: bytes, endianness: .big)
+    /// let value = Double.ieee754(bytes)
+    /// let value = Double.ieee754(bytes, endianness: .big)
     /// ```
-    public static func value(
-        from bytes: [UInt8],
+    public static func ieee754(
+        _ bytes: [UInt8],
         endianness: [UInt8].Endianness = .little
     ) -> Double? {
         IEEE_754.Binary64.value(from: bytes, endianness: endianness)

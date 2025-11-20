@@ -27,10 +27,10 @@ extension Float {
 
 // MARK: - Type-level Methods
 
-extension Float.IEEE754 {
+extension Float {
     /// Creates Float from IEEE 754 binary32 bytes
     ///
-    /// Convenience that delegates to `IEEE_754.Binary32.value(from:endianness:)`.
+    /// Delegates to `IEEE_754.Binary32.value(from:endianness:)`.
     ///
     /// - Parameters:
     ///   - bytes: 4-byte array in IEEE 754 binary32 format
@@ -39,11 +39,11 @@ extension Float.IEEE754 {
     ///
     /// Example:
     /// ```swift
-    /// let value = Float.ieee754.value(from: bytes)
-    /// let value = Float.ieee754.value(from: bytes, endianness: .big)
+    /// let value = Float.ieee754(bytes)
+    /// let value = Float.ieee754(bytes, endianness: .big)
     /// ```
-    public static func value(
-        from bytes: [UInt8],
+    public static func ieee754(
+        _ bytes: [UInt8],
         endianness: [UInt8].Endianness = .little
     ) -> Float? {
         IEEE_754.Binary32.value(from: bytes, endianness: endianness)

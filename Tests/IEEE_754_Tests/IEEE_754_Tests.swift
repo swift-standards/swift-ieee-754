@@ -84,7 +84,7 @@ struct ConvenienceAPITests {
     func doubleNamespacedAPI() {
         let value: Double = 2.71828
         let bytes = value.ieee754.bytes()
-        let restored = Double.ieee754.value(from: bytes)
+        let restored = Double.ieee754(bytes)
 
         #expect(restored == value)
     }
@@ -93,7 +93,7 @@ struct ConvenienceAPITests {
     func floatNamespacedAPI() {
         let value: Float = 1.414
         let bytes = value.ieee754.bytes()
-        let restored = Float.ieee754.value(from: bytes)
+        let restored = Float.ieee754(bytes)
 
         #expect(restored == value)
     }
