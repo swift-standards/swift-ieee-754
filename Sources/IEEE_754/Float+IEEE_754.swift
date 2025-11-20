@@ -25,6 +25,35 @@ extension Float {
     }
 }
 
+// MARK: - Canonical Deserialization
+
+extension Float {
+    /// Creates Float from IEEE 754 binary32 bytes
+    ///
+    /// This is the canonical deserialization for Float, following the
+    /// FixedWidthInteger pattern. IEEE 754 is THE authoritative representation
+    /// for floating-point values.
+    ///
+    /// Delegates to `IEEE_754.Binary32.value(from:endianness:)`.
+    ///
+    /// - Parameters:
+    ///   - bytes: 4-byte array in IEEE 754 binary32 format
+    ///   - endianness: Byte order of input bytes
+    /// - Returns: nil if bytes.count ≠ 4
+    ///
+    /// Example:
+    /// ```swift
+    /// let value = Float(bytes: data)
+    /// let value = Float(bytes: data, endianness: .big)
+    /// ```
+    public init?(bytes: [UInt8], endianness: [UInt8].Endianness = .little) {
+        guard let value = IEEE_754.Binary32.value(from: bytes, endianness: endianness) else {
+            return nil
+        }
+        self = value
+    }
+}
+
 // MARK: - Type-level Methods
 
 extension Float {

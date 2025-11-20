@@ -25,6 +25,35 @@ extension Double {
     }
 }
 
+// MARK: - Canonical Deserialization
+
+extension Double {
+    /// Creates Double from IEEE 754 binary64 bytes
+    ///
+    /// This is the canonical deserialization for Double, following the
+    /// FixedWidthInteger pattern. IEEE 754 is THE authoritative representation
+    /// for floating-point values.
+    ///
+    /// Delegates to `IEEE_754.Binary64.value(from:endianness:)`.
+    ///
+    /// - Parameters:
+    ///   - bytes: 8-byte array in IEEE 754 binary64 format
+    ///   - endianness: Byte order of input bytes
+    /// - Returns: nil if bytes.count ≠ 8
+    ///
+    /// Example:
+    /// ```swift
+    /// let value = Double(bytes: data)
+    /// let value = Double(bytes: data, endianness: .big)
+    /// ```
+    public init?(bytes: [UInt8], endianness: [UInt8].Endianness = .little) {
+        guard let value = IEEE_754.Binary64.value(from: bytes, endianness: endianness) else {
+            return nil
+        }
+        self = value
+    }
+}
+
 // MARK: - Type-level Methods
 
 extension Double {

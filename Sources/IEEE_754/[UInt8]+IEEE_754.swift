@@ -106,3 +106,45 @@ extension [UInt8].IEEE754 {
         IEEE_754.Binary32.value(from: bytes, endianness: endianness)
     }
 }
+
+// MARK: - Canonical [UInt8] Initializers
+
+extension [UInt8] {
+    /// Creates byte array from Double using IEEE 754 binary64 format
+    ///
+    /// This is the canonical binary serialization for Double, following the
+    /// FixedWidthInteger pattern. IEEE 754 is THE authoritative representation
+    /// for floating-point values, not one encoding among many.
+    ///
+    /// - Parameters:
+    ///   - value: Double to serialize
+    ///   - endianness: Byte order (defaults to little-endian)
+    ///
+    /// Example:
+    /// ```swift
+    /// let bytes = [UInt8](3.14159)                    // Little-endian
+    /// let bytes = [UInt8](3.14159, endianness: .big)  // Big-endian (network order)
+    /// ```
+    public init(_ value: Double, endianness: Endianness = .little) {
+        self = IEEE_754.Binary64.bytes(from: value, endianness: endianness)
+    }
+
+    /// Creates byte array from Float using IEEE 754 binary32 format
+    ///
+    /// This is the canonical binary serialization for Float, following the
+    /// FixedWidthInteger pattern. IEEE 754 is THE authoritative representation
+    /// for floating-point values, not one encoding among many.
+    ///
+    /// - Parameters:
+    ///   - value: Float to serialize
+    ///   - endianness: Byte order (defaults to little-endian)
+    ///
+    /// Example:
+    /// ```swift
+    /// let bytes = [UInt8](Float(3.14))                    // Little-endian
+    /// let bytes = [UInt8](Float(3.14), endianness: .big)  // Big-endian (network order)
+    /// ```
+    public init(_ value: Float, endianness: Endianness = .little) {
+        self = IEEE_754.Binary32.bytes(from: value, endianness: endianness)
+    }
+}

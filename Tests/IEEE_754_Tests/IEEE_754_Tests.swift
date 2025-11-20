@@ -17,11 +17,29 @@ struct Binary64Tests {
         #expect(restored == original)
     }
 
+    @Test("Double canonical init round-trip")
+    func doubleCanonicalInitRoundTrip() {
+        let original: Double = 3.14159265358979323846
+        let bytes = [UInt8](original)
+        let restored = Double(bytes: bytes)
+
+        #expect(restored == original)
+    }
+
     @Test("Double big-endian serialization")
     func doubleBigEndian() {
         let value: Double = 3.14159
         let bytes = value.ieee754.bytes(endianness: .big)
         let restored = bytes.ieee754.asDouble(endianness: .big)
+
+        #expect(restored == value)
+    }
+
+    @Test("Double canonical init big-endian")
+    func doubleCanonicalInitBigEndian() {
+        let value: Double = 3.14159
+        let bytes = [UInt8](value, endianness: .big)
+        let restored = Double(bytes: bytes, endianness: .big)
 
         #expect(restored == value)
     }
@@ -53,11 +71,29 @@ struct Binary32Tests {
         #expect(restored == original)
     }
 
+    @Test("Float canonical init round-trip")
+    func floatCanonicalInitRoundTrip() {
+        let original: Float = 3.14159
+        let bytes = [UInt8](original)
+        let restored = Float(bytes: bytes)
+
+        #expect(restored == original)
+    }
+
     @Test("Float big-endian serialization")
     func floatBigEndian() {
         let value: Float = 3.14
         let bytes = value.ieee754.bytes(endianness: .big)
         let restored = bytes.ieee754.asFloat(endianness: .big)
+
+        #expect(restored == value)
+    }
+
+    @Test("Float canonical init big-endian")
+    func floatCanonicalInitBigEndian() {
+        let value: Float = 3.14
+        let bytes = [UInt8](value, endianness: .big)
+        let restored = Float(bytes: bytes, endianness: .big)
 
         #expect(restored == value)
     }
