@@ -15,10 +15,11 @@ Pure Swift implementation with no Foundation dependencies, suitable for Swift Em
 
 - Binary32 (single precision) and binary64 (double precision) formats
 - Little-endian and big-endian byte order support
+- Array serialization/deserialization for multiple Float/Double values
 - Zero-copy deserialization with unsafe memory operations
 - Cross-module inlining via `@inlinable` and `@_transparent`
 - Comprehensive special value handling (NaN, infinity, subnormals, signed zero)
-- 174 tests covering edge cases, performance, and concurrency
+- 224 tests covering edge cases, performance, and concurrency
 
 ## Installation
 
@@ -112,9 +113,30 @@ let value = IEEE_754.Binary32.value(from: bytes)
 ### Array Extensions
 
 ```swift
-// Convenience initializers
+// Single value serialization
 let doubleBytes: [UInt8] = [UInt8](3.14159)
 let floatBytes: [UInt8] = [UInt8](Float(3.14))
+
+// Multiple Doubles from byte array
+let bytes: [UInt8] = [
+    0x6E, 0x86, 0x1B, 0xF0, 0xF9, 0x21, 0x09, 0x40,  // 3.14159
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0x3F,  // 1.0
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40   // 2.0
+]
+let doubles = [Double](bytes: bytes)
+// Optional([3.14159, 1.0, 2.0])
+
+// Multiple Floats from byte array
+let floatBytes: [UInt8] = [
+    0xD0, 0x0F, 0x49, 0x40,  // 3.14159
+    0x00, 0x00, 0x80, 0x3F,  // 1.0
+    0x00, 0x00, 0x00, 0x40   // 2.0
+]
+let floats = [Float](bytes: floatBytes)
+// Optional([3.14159, 1.0, 2.0])
+
+// Big-endian deserialization
+let bigEndianDoubles = [Double](bytes: bytes, endianness: .big)
 ```
 
 ### Special Values
@@ -160,7 +182,7 @@ Conforms to IEEE 754-2019:
 
 ## Testing
 
-Test suite: 174 tests in 55 suites
+Test suite: 224 tests in 60 suites
 
 Coverage:
 - Round-trip conversions
@@ -168,6 +190,7 @@ Coverage:
 - Edge cases (subnormals, extreme values, ULP boundaries)
 - Endianness handling
 - Bit pattern validation
+- Array serialization/deserialization
 - Performance benchmarks
 - Concurrent access safety
 
