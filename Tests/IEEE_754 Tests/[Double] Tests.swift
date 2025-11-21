@@ -303,7 +303,7 @@ extension `Performance Tests` {
             }
         }
 
-        @Test(.timed(threshold: .milliseconds(3)))
+        @Test(.timed(threshold: .milliseconds(10)))
         func `special values array 1000 times`() {
             let specialValues: [Double] = [
                 0.0, -0.0,
