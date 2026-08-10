@@ -3,8 +3,8 @@
 //
 // Hardware floating-point exception state for Float
 
-#if CIEEE754_SHIM
-    import CIEEE754
+#if IEEE_754_SHIMS
+    import IEEE_754_Shims
 #endif
 
 // MARK: - Float.Exception Namespace
@@ -81,7 +81,7 @@ extension Float.Exception {
 
 // MARK: - Float.Exception.State Internal Init
 
-#if CIEEE754_SHIM
+#if IEEE_754_SHIMS
     extension Float.Exception.State {
         internal init(cState: IEEE754Exceptions) {
             self.init(
@@ -113,7 +113,7 @@ extension Float.Exception {
     /// }
     /// ```
     public static func test() -> State {
-        #if CIEEE754_SHIM
+        #if IEEE_754_SHIMS
             let cState = ieee754_test_fpu_exceptions()
             return State(cState: cState)
         #else
@@ -138,7 +138,7 @@ extension Float.Exception {
     /// // All hardware FPU exception flags are now clear
     /// ```
     public static func clear() {
-        #if CIEEE754_SHIM
+        #if IEEE_754_SHIMS
             ieee754_clear_fpu_exceptions()
         #endif
     }

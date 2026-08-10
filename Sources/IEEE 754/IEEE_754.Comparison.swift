@@ -4,8 +4,8 @@
 // IEEE 754-2019 Section 5.6: Comparison Predicates
 // Authoritative implementations of floating-point comparison operations
 
-#if CIEEE754_SHIM
-    import CIEEE754
+#if IEEE_754_SHIMS
+    import IEEE_754_Shims
 #endif
 
 // MARK: - IEEE 754 Comparison Operations
@@ -434,7 +434,7 @@ extension IEEE_754.Comparison {
 
 // MARK: - Signaling Comparisons
 
-#if CIEEE754_SHIM
+#if IEEE_754_SHIMS
     extension IEEE_754.Comparison {
         /// Signaling comparison operations
         ///

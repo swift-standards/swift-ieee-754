@@ -1,7 +1,7 @@
 // Swift API Wrappers Tests.swift
 // swift-ieee-754
 //
-// Tests for elegant Swift wrappers around CIEEE754 functionality
+// Tests for elegant Swift wrappers around IEEE 754 Shims functionality
 
 import Testing
 

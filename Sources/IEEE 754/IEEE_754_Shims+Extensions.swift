@@ -1,12 +1,12 @@
-// CIEEE754+Extensions.swift
+// IEEE_754_Shims+Extensions.swift
 // swift-ieee-754
 //
-// Swift convenience wrappers for CIEEE754 C APIs
+// Swift convenience wrappers for IEEE 754 Shims C APIs
 //
 // Provides scoped APIs that guarantee cleanup and prevent test pollution
 
-#if CIEEE754_SHIM
-    import CIEEE754
+#if IEEE_754_SHIMS
+    import IEEE_754_Shims
 
     /// Scoped rounding mode execution
     ///

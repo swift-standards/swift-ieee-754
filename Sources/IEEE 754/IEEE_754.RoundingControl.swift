@@ -3,8 +3,8 @@
 //
 // IEEE 754-2019 Section 4.3: Rounding Direction Attributes
 
-#if CIEEE754_SHIM
-    import CIEEE754
+#if IEEE_754_SHIMS
+    import IEEE_754_Shims
 
     extension IEEE_754 {
         /// Dynamic rounding mode control
