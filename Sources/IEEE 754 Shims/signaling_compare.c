@@ -1,9 +1,9 @@
 // signaling_compare.c
-// CIEEE754
+// IEEE 754 Shims
 //
 // IEEE 754-2019 Section 5.6.1: Signaling Comparison Predicates
 
-// The CIEEE754 FPU shim is POSIX/Darwin-only (fenv.h, pthreads). It is not a
+// The IEEE 754 Shims FPU shim is POSIX/Darwin-only (fenv.h, pthreads). It is not a
 // dependency of the "IEEE 754" target on Windows (see Package.swift + the
 // IEEE_754_SHIMS define), so compile this translation unit empty there rather
 // than fail on the unavailable <pthread.h>/<fenv.h> surface.
