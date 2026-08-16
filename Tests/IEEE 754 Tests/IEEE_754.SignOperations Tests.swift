@@ -46,7 +46,10 @@ extension IEEE_754.SignOperations {
             for value in values {
                 let result = IEEE_754.SignOperations.negate(IEEE_754.SignOperations.negate(value))
                 if value.isZero {
-                    #expect(result.isZero && result.sign == value.sign, "Double negation should restore original for zeros")
+                    #expect(
+                        result.isZero && result.sign == value.sign,
+                        "Double negation should restore original for zeros"
+                    )
                 } else {
                     #expect(result == value, "Double negation should restore original")
                 }
@@ -103,7 +106,10 @@ extension IEEE_754.SignOperations.Test {
         ])
         func `normal Values`(magnitude: Double, sign: Double, expected: Double) {
             let result = IEEE_754.SignOperations.copySign(magnitude: magnitude, sign: sign)
-            #expect(result == expected, "copySign(magnitude: \(magnitude), sign: \(sign)) should be \(expected)")
+            #expect(
+                result == expected,
+                "copySign(magnitude: \(magnitude), sign: \(sign)) should be \(expected)"
+            )
         }
 
         @Test func `zero Magnitude`() {
@@ -121,14 +127,27 @@ extension IEEE_754.SignOperations.Test {
         }
 
         @Test func `infinity Magnitude`() {
-            #expect(IEEE_754.SignOperations.copySign(magnitude: Double.infinity, sign: 1.0) == Double.infinity)
-            #expect(IEEE_754.SignOperations.copySign(magnitude: Double.infinity, sign: -1.0) == -Double.infinity)
-            #expect(IEEE_754.SignOperations.copySign(magnitude: -Double.infinity, sign: 1.0) == Double.infinity)
+            #expect(
+                IEEE_754.SignOperations.copySign(magnitude: Double.infinity, sign: 1.0)
+                    == Double.infinity
+            )
+            #expect(
+                IEEE_754.SignOperations.copySign(magnitude: Double.infinity, sign: -1.0) == -Double
+                    .infinity
+            )
+            #expect(
+                IEEE_754.SignOperations.copySign(magnitude: -Double.infinity, sign: 1.0)
+                    == Double.infinity
+            )
         }
 
         @Test func `infinity Sign`() {
-            #expect(IEEE_754.SignOperations.copySign(magnitude: 3.14, sign: Double.infinity) == 3.14)
-            #expect(IEEE_754.SignOperations.copySign(magnitude: 3.14, sign: -Double.infinity) == -3.14)
+            #expect(
+                IEEE_754.SignOperations.copySign(magnitude: 3.14, sign: Double.infinity) == 3.14
+            )
+            #expect(
+                IEEE_754.SignOperations.copySign(magnitude: 3.14, sign: -Double.infinity) == -3.14
+            )
         }
 
         @Test func `nan Handling`() {
@@ -212,19 +231,34 @@ extension IEEE_754.SignOperations.Test {
         ])
         func `normal Values`(magnitude: Float, sign: Float, expected: Float) {
             let result = IEEE_754.SignOperations.copySign(magnitude: magnitude, sign: sign)
-            #expect(result == expected, "copySign(magnitude: \(magnitude), sign: \(sign)) should be \(expected)")
+            #expect(
+                result == expected,
+                "copySign(magnitude: \(magnitude), sign: \(sign)) should be \(expected)"
+            )
         }
 
         @Test func `zero Magnitude`() {
-            #expect(IEEE_754.SignOperations.copySign(magnitude: Float(0.0), sign: Float(1.0)) == Float(0.0))
-            #expect(IEEE_754.SignOperations.copySign(magnitude: Float(0.0), sign: Float(-1.0)) == Float(-0.0))
+            #expect(
+                IEEE_754.SignOperations.copySign(magnitude: Float(0.0), sign: Float(1.0))
+                    == Float(0.0)
+            )
+            #expect(
+                IEEE_754.SignOperations.copySign(magnitude: Float(0.0), sign: Float(-1.0))
+                    == Float(-0.0)
+            )
             let result = IEEE_754.SignOperations.copySign(magnitude: Float(0.0), sign: Float(-1.0))
             #expect(result.sign == .minus, "copySign with negative sign should produce -0.0")
         }
 
         @Test func `infinity Magnitude`() {
-            #expect(IEEE_754.SignOperations.copySign(magnitude: Float.infinity, sign: Float(1.0)) == Float.infinity)
-            #expect(IEEE_754.SignOperations.copySign(magnitude: Float.infinity, sign: Float(-1.0)) == -Float.infinity)
+            #expect(
+                IEEE_754.SignOperations.copySign(magnitude: Float.infinity, sign: Float(1.0))
+                    == Float.infinity
+            )
+            #expect(
+                IEEE_754.SignOperations.copySign(magnitude: Float.infinity, sign: Float(-1.0))
+                    == -Float.infinity
+            )
         }
 
         @Test func `nan Handling`() {

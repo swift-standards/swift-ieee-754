@@ -26,14 +26,23 @@ extension IEEE_754.Classification {
             (-Double.leastNonzeroMagnitude, true),
         ])
         func `Is Sign Minus`(value: Double, expected: Bool) {
-            #expect(IEEE_754.Classification.isSignMinus(value) == expected, "isSignMinus(\(value)) should be \(expected)")
+            #expect(
+                IEEE_754.Classification.isSignMinus(value) == expected,
+                "isSignMinus(\(value)) should be \(expected)"
+            )
         }
 
         @Test func `Nan Sign Bits`() {
             let positiveNaN = Double.nan
             let negativeNaN = -Double.nan
-            #expect(!IEEE_754.Classification.isSignMinus(positiveNaN), "Positive NaN should not have sign bit set")
-            #expect(IEEE_754.Classification.isSignMinus(negativeNaN), "Negative NaN should have sign bit set")
+            #expect(
+                !IEEE_754.Classification.isSignMinus(positiveNaN),
+                "Positive NaN should not have sign bit set"
+            )
+            #expect(
+                IEEE_754.Classification.isSignMinus(negativeNaN),
+                "Negative NaN should have sign bit set"
+            )
         }
     }
 }
@@ -64,13 +73,22 @@ extension IEEE_754.Classification.Test {
         @Test func subnormals() {
             let subnormal = Double.leastNonzeroMagnitude
             #expect(!IEEE_754.Classification.isNormal(subnormal), "Subnormal should not be normal")
-            #expect(!IEEE_754.Classification.isNormal(-subnormal), "Negative subnormal should not be normal")
+            #expect(
+                !IEEE_754.Classification.isNormal(-subnormal),
+                "Negative subnormal should not be normal"
+            )
         }
 
         @Test func `Min Normal`() {
             let minNorm = Double.leastNormalMagnitude
-            #expect(IEEE_754.Classification.isNormal(minNorm), "leastNormalMagnitude should be normal")
-            #expect(IEEE_754.Classification.isNormal(-minNorm), "Negative leastNormalMagnitude should be normal")
+            #expect(
+                IEEE_754.Classification.isNormal(minNorm),
+                "leastNormalMagnitude should be normal"
+            )
+            #expect(
+                IEEE_754.Classification.isNormal(-minNorm),
+                "Negative leastNormalMagnitude should be normal"
+            )
         }
     }
 }
@@ -95,8 +113,14 @@ extension IEEE_754.Classification.Test {
 
         @Test func `Extreme Finite Values`() {
             let maxFinite = Double.greatestFiniteMagnitude
-            #expect(IEEE_754.Classification.isFinite(maxFinite), "greatestFiniteMagnitude should be finite")
-            #expect(IEEE_754.Classification.isFinite(-maxFinite), "Negative greatestFiniteMagnitude should be finite")
+            #expect(
+                IEEE_754.Classification.isFinite(maxFinite),
+                "greatestFiniteMagnitude should be finite"
+            )
+            #expect(
+                IEEE_754.Classification.isFinite(-maxFinite),
+                "Negative greatestFiniteMagnitude should be finite"
+            )
         }
 
         @Test func subnormals() {
@@ -114,7 +138,9 @@ extension IEEE_754.Classification.Test {
             #expect(IEEE_754.Classification.isZero(value), "\(value) should be zero")
         }
 
-        @Test(arguments: [1.0, -1.0, 0.1, -0.1, Double.leastNonzeroMagnitude, -Double.leastNonzeroMagnitude])
+        @Test(arguments: [
+            1.0, -1.0, 0.1, -0.1, Double.leastNonzeroMagnitude, -Double.leastNonzeroMagnitude,
+        ])
         func `Non Zeros`(value: Double) {
             #expect(!IEEE_754.Classification.isZero(value), "\(value) should not be zero")
         }
@@ -131,14 +157,21 @@ extension IEEE_754.Classification.Test {
     struct DoubleIsSubnormal {
         @Test func `Min Subnormal`() {
             let minSubnorm = Double.leastNonzeroMagnitude
-            #expect(IEEE_754.Classification.isSubnormal(minSubnorm), "leastNonzeroMagnitude should be subnormal")
-            #expect(IEEE_754.Classification.isSubnormal(-minSubnorm), "Negative leastNonzeroMagnitude should be subnormal")
+            #expect(
+                IEEE_754.Classification.isSubnormal(minSubnorm),
+                "leastNonzeroMagnitude should be subnormal"
+            )
+            #expect(
+                IEEE_754.Classification.isSubnormal(-minSubnorm),
+                "Negative leastNonzeroMagnitude should be subnormal"
+            )
         }
 
         @Test func `Max Subnormal`() {
             let maxSubnorm = Double.leastNormalMagnitude.nextDown
             #expect(
-                IEEE_754.Classification.isSubnormal(maxSubnorm), "Value just below leastNormalMagnitude should be subnormal"
+                IEEE_754.Classification.isSubnormal(maxSubnorm),
+                "Value just below leastNormalMagnitude should be subnormal"
             )
         }
 
@@ -180,7 +213,10 @@ extension IEEE_754.Classification.Test {
         @Test func overflow() {
             let maxFinite = Double.greatestFiniteMagnitude
             let overflow = maxFinite * 2.0
-            #expect(IEEE_754.Classification.isInfinite(overflow), "Overflow should produce infinity")
+            #expect(
+                IEEE_754.Classification.isInfinite(overflow),
+                "Overflow should produce infinity"
+            )
         }
     }
 }
@@ -228,9 +264,15 @@ extension IEEE_754.Classification.Test {
 extension IEEE_754.Classification.Test {
     @Suite("IEEE_754.Classification - Double isCanonical")
     struct DoubleIsCanonical {
-        @Test(arguments: [0.0, -0.0, 1.0, -1.0, 3.14, Double.infinity, -Double.infinity, Double.nan, Double.signalingNaN])
+        @Test(arguments: [
+            0.0, -0.0, 1.0, -1.0, 3.14, Double.infinity, -Double.infinity, Double.nan,
+            Double.signalingNaN,
+        ])
         func `All Values Canonical`(value: Double) {
-            #expect(IEEE_754.Classification.isCanonical(value), "All binary format values should be canonical")
+            #expect(
+                IEEE_754.Classification.isCanonical(value),
+                "All binary format values should be canonical"
+            )
         }
     }
 }
@@ -240,7 +282,10 @@ extension IEEE_754.Classification.Test {
     struct DoubleRadix {
         @Test(arguments: [0.0, 1.0, -1.0, 3.14, Double.infinity, Double.nan])
         func `Radix Is Two`(value: Double) {
-            #expect(IEEE_754.Classification.radix(value) == 2, "Radix should always be 2 for binary formats")
+            #expect(
+                IEEE_754.Classification.radix(value) == 2,
+                "Radix should always be 2 for binary formats"
+            )
         }
     }
 }

@@ -92,18 +92,25 @@ extension IEEE_754.MinMax {
         switch operation {
         case .standard(.minimum):
             return minimum(x, y)
+
         case .standard(.maximum):
             return maximum(x, y)
+
         case .number(.minimum):
             return minimumNumber(x, y)
+
         case .number(.maximum):
             return maximumNumber(x, y)
+
         case .magnitude(.minimum, preferNumber: false):
             return minimumMagnitude(x, y)
+
         case .magnitude(.maximum, preferNumber: false):
             return maximumMagnitude(x, y)
+
         case .magnitude(.minimum, preferNumber: true):
             return minimumMagnitudeNumber(x, y)
+
         case .magnitude(.maximum, preferNumber: true):
             return maximumMagnitudeNumber(x, y)
         }
@@ -123,18 +130,25 @@ extension IEEE_754.MinMax {
         switch operation {
         case .standard(.minimum):
             return minimum(x, y)
+
         case .standard(.maximum):
             return maximum(x, y)
+
         case .number(.minimum):
             return minimumNumber(x, y)
+
         case .number(.maximum):
             return maximumNumber(x, y)
+
         case .magnitude(.minimum, preferNumber: false):
             return minimumMagnitude(x, y)
+
         case .magnitude(.maximum, preferNumber: false):
             return maximumMagnitude(x, y)
+
         case .magnitude(.minimum, preferNumber: true):
             return minimumMagnitudeNumber(x, y)
+
         case .magnitude(.maximum, preferNumber: true):
             return maximumMagnitudeNumber(x, y)
         }

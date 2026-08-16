@@ -21,13 +21,19 @@ extension IEEE_754.NextOperations {
 
         @Test func `from Zero`() {
             let next = IEEE_754.NextOperations.nextUp(0.0)
-            #expect(next == Double.leastNonzeroMagnitude, "nextUp(0) should be leastNonzeroMagnitude")
+            #expect(
+                next == Double.leastNonzeroMagnitude,
+                "nextUp(0) should be leastNonzeroMagnitude"
+            )
             #expect(next > 0.0, "nextUp(0) should be positive")
         }
 
         @Test func `from Negative Zero`() {
             let next = IEEE_754.NextOperations.nextUp(-0.0)
-            #expect(next == Double.leastNonzeroMagnitude, "nextUp(-0) should be leastNonzeroMagnitude")
+            #expect(
+                next == Double.leastNonzeroMagnitude,
+                "nextUp(-0) should be leastNonzeroMagnitude"
+            )
             #expect(next > 0.0, "nextUp(-0) should be positive")
         }
 
@@ -71,13 +77,19 @@ extension IEEE_754.NextOperations.Test {
 
         @Test func `from Zero`() {
             let next = IEEE_754.NextOperations.nextDown(0.0)
-            #expect(next == -Double.leastNonzeroMagnitude, "nextDown(0) should be -leastNonzeroMagnitude")
+            #expect(
+                next == -Double.leastNonzeroMagnitude,
+                "nextDown(0) should be -leastNonzeroMagnitude"
+            )
             #expect(next < 0.0, "nextDown(0) should be negative")
         }
 
         @Test func `from Negative Zero`() {
             let next = IEEE_754.NextOperations.nextDown(-0.0)
-            #expect(next == -Double.leastNonzeroMagnitude, "nextDown(-0) should be -leastNonzeroMagnitude")
+            #expect(
+                next == -Double.leastNonzeroMagnitude,
+                "nextDown(-0) should be -leastNonzeroMagnitude"
+            )
             #expect(next < 0.0, "nextDown(-0) should be negative")
         }
 
@@ -172,7 +184,10 @@ extension IEEE_754.NextOperations.Test {
 
         @Test func `from Zero`() {
             let next = IEEE_754.NextOperations.nextUp(Float(0.0))
-            #expect(next == Float.leastNonzeroMagnitude, "nextUp(0) should be leastNonzeroMagnitude")
+            #expect(
+                next == Float.leastNonzeroMagnitude,
+                "nextUp(0) should be leastNonzeroMagnitude"
+            )
         }
 
         @Test func `from Infinity`() {
@@ -199,7 +214,10 @@ extension IEEE_754.NextOperations.Test {
 
         @Test func `from Zero`() {
             let next = IEEE_754.NextOperations.nextDown(Float(0.0))
-            #expect(next == -Float.leastNonzeroMagnitude, "nextDown(0) should be -leastNonzeroMagnitude")
+            #expect(
+                next == -Float.leastNonzeroMagnitude,
+                "nextDown(0) should be -leastNonzeroMagnitude"
+            )
         }
 
         @Test func `from Negative Infinity`() {

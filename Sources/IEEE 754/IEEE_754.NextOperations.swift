@@ -71,8 +71,10 @@ extension IEEE_754.NextOperations {
         switch direction {
         case .toward(.positiveInfinity):
             return value.nextUp
+
         case .toward(.negativeInfinity):
             return value.nextDown
+
         case .toward(.value(let target)):
             return nextAfter(value, toward: target)
         }
@@ -91,8 +93,10 @@ extension IEEE_754.NextOperations {
         switch direction {
         case .toward(.positiveInfinity):
             return value.nextUp
+
         case .toward(.negativeInfinity):
             return value.nextDown
+
         case .toward(.value(let target)):
             return nextAfter(value, toward: Float(target))
         }
@@ -214,10 +218,13 @@ extension IEEE_754.NextOperations.Direction.Target {
         switch (lhs, rhs) {
         case (.positiveInfinity, .positiveInfinity):
             return true
+
         case (.negativeInfinity, .negativeInfinity):
             return true
+
         case (.value(let l), .value(let r)):
             return l.bitPattern == r.bitPattern  // Bitwise equality for NaN handling
+
         default:
             return false
         }

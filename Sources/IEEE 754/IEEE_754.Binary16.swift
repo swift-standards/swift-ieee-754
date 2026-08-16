@@ -257,6 +257,7 @@ extension IEEE_754.Binary16 {
                 switch endianness {
                 case .little:
                     return UInt16(littleEndian: loaded)
+
                 case .big:
                     return UInt16(bigEndian: loaded)
                 }

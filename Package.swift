@@ -22,7 +22,7 @@ let package = Package(
         .iOS(.v26),
         .tvOS(.v26),
         .watchOS(.v26),
-        .visionOS(.v26)
+        .visionOS(.v26),
     ],
     products: [
         .library(
@@ -31,10 +31,22 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-primitives/swift-binary-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-standard-library-extensions.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-decimal-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-dependency-primitives.git", branch: "main"),
+        .package(
+            url: "https://github.com/swift-primitives/swift-binary-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-standard-library-extensions.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-decimal-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-dependency-primitives.git",
+            branch: "main"
+        ),
     ],
     targets: [
         .target(
@@ -47,7 +59,10 @@ let package = Package(
                 .product(name: "Binary Primitives", package: "swift-binary-primitives"),
                 .product(name: "Decimal Primitives", package: "swift-decimal-primitives"),
                 .product(name: "Dependency Primitives", package: "swift-dependency-primitives"),
-                .target(name: "CIEEE754", condition: .when(platforms: [.macOS, .linux, .iOS, .tvOS, .watchOS]))
+                .target(
+                    name: "CIEEE754",
+                    condition: .when(platforms: [.macOS, .linux, .iOS, .tvOS, .watchOS])
+                ),
             ],
             // Gate the C-shim source paths on a define that mirrors the CIEEE754
             // dependency condition exactly. `canImport(CIEEE754)` is unreliable
@@ -66,8 +81,14 @@ let package = Package(
             name: "IEEE 754 Tests",
             dependencies: [
                 "IEEE 754",
-                .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
-                .target(name: "CIEEE754", condition: .when(platforms: [.macOS, .linux, .iOS, .tvOS, .watchOS])),
+                .product(
+                    name: "Standard Library Extensions",
+                    package: "swift-standard-library-extensions"
+                ),
+                .target(
+                    name: "CIEEE754",
+                    condition: .when(platforms: [.macOS, .linux, .iOS, .tvOS, .watchOS])
+                ),
             ],
             // Mirror the "IEEE 754" target's shim gating so the C-shim
             // integration tests compile out on Windows (see the note above).

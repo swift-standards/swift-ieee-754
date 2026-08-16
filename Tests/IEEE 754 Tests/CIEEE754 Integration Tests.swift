@@ -21,8 +21,10 @@
             // Should be able to query current rounding mode
             let mode = ieee754_get_rounding_mode()
             #expect(
-                mode == IEEE754_ROUND_TONEAREST || mode == IEEE754_ROUND_DOWNWARD || mode == IEEE754_ROUND_UPWARD
-                    || mode == IEEE754_ROUND_TOWARDZERO)
+                mode == IEEE754_ROUND_TONEAREST || mode == IEEE754_ROUND_DOWNWARD
+                    || mode == IEEE754_ROUND_UPWARD
+                    || mode == IEEE754_ROUND_TOWARDZERO
+            )
         }
 
         @Test func `Set Rounding Mode To Nearest`() {
@@ -232,7 +234,10 @@
             ieee754_clear_all_exceptions()
             let result = ieee754_signaling_equal(Double.nan, 3.14)
             #expect(result == 0)
-            #expect(ieee754_test_exception(IEEE754_EXCEPTION_INVALID) == 1, "Should raise invalid exception")
+            #expect(
+                ieee754_test_exception(IEEE754_EXCEPTION_INVALID) == 1,
+                "Should raise invalid exception"
+            )
         }
 
         @Test func `Signaling Less Normal`() {

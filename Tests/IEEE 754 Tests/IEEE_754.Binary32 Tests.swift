@@ -39,7 +39,9 @@ extension IEEE_754.Binary32 {
         }
 
         @Test func `bit layout sums to 32`() {
-            let total = IEEE_754.Binary32.signBits + IEEE_754.Binary32.exponentBits + IEEE_754.Binary32.significandBits
+            let total =
+                IEEE_754.Binary32.signBits + IEEE_754.Binary32.exponentBits
+                + IEEE_754.Binary32.significandBits
             #expect(total == 32, "Sign + exponent + significand bits should equal 32")
         }
     }
@@ -100,8 +102,14 @@ extension IEEE_754.Binary32.Test {
 
         @Test func `value(from:) with wrong byte count returns nil`() {
             #expect(IEEE_754.Binary32.value(from: []) == nil, "Empty array should return nil")
-            #expect(IEEE_754.Binary32.value(from: [UInt8](repeating: 0, count: 3)) == nil, "3 bytes should return nil")
-            #expect(IEEE_754.Binary32.value(from: [UInt8](repeating: 0, count: 5)) == nil, "5 bytes should return nil")
+            #expect(
+                IEEE_754.Binary32.value(from: [UInt8](repeating: 0, count: 3)) == nil,
+                "3 bytes should return nil"
+            )
+            #expect(
+                IEEE_754.Binary32.value(from: [UInt8](repeating: 0, count: 5)) == nil,
+                "5 bytes should return nil"
+            )
         }
 
         @Test func `value(from:) with exactly 4 bytes succeeds`() {

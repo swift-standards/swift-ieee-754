@@ -255,7 +255,10 @@ extension IEEE_754.Rounding.Test {
             (2.5, 3.0),  // Ties away from zero: 2.5 → 3.0
             (1.5, 2.0),  // Ties away from zero: 1.5 → 2.0
         ])
-    func `roundAwayFromZero rounds to nearest (ties away from zero)`(value: Double, expected: Double) {
+    func `roundAwayFromZero rounds to nearest (ties away from zero)`(
+        value: Double,
+        expected: Double
+    ) {
         #expect(IEEE_754.Rounding.roundAwayFromZero(value) == expected)
         #expect(value.ieee754.roundAwayFromZero == expected)
     }
@@ -304,7 +307,10 @@ extension IEEE_754.Rounding.Test {
             (Float(0.5), Float(1.0)),  // Ties away from zero
             (Float(-0.5), Float(-1.0)),  // Ties away from zero
         ])
-    func `float roundAwayFromZero rounds to nearest (ties away from zero)`(value: Float, expected: Float) {
+    func `float roundAwayFromZero rounds to nearest (ties away from zero)`(
+        value: Float,
+        expected: Float
+    ) {
         #expect(IEEE_754.Rounding.roundAwayFromZero(value) == expected)
         #expect(value.ieee754.roundAwayFromZero == expected)
     }
@@ -455,12 +461,16 @@ extension IEEE_754.Rounding.Test {
             switch direction {
             case .towardInfinity(.negative):
                 #expect(result == 3.0)
+
             case .towardInfinity(.positive):
                 #expect(result == 4.0)
+
             case .towardZero:
                 #expect(result == 3.0)
+
             case .toNearest(.toEven):
                 #expect(result == 4.0)
+
             case .toNearest(.awayFromZero):
                 #expect(result == 4.0)
             }
