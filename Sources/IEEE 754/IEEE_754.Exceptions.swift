@@ -75,7 +75,7 @@ extension IEEE_754 {
     /// structured child `Task {}`s but is **not** inherited by a manually
     /// spawned `Thread`/`pthread_create`.
     ///
-    /// The optional C shim (`CIEEE754_SHIM`) additionally exposes genuinely
+    /// The optional C shim (`IEEE_754_SHIMS`) additionally exposes genuinely
     /// per-OS-thread exception flags (`ieee754_raise_exception` /
     /// `ieee754_test_exception` / `ieee754_clear_exception`, backed by
     /// `pthread_getspecific`) and hardware FPU flags

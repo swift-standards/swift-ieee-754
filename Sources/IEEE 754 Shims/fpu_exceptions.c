@@ -1,11 +1,11 @@
 // fpu_exceptions.c
-// CIEEE754
+// IEEE 754 Shims
 //
 // IEEE 754-2019 Section 7: Hardware FPU Exception Detection
 
-// The CIEEE754 FPU shim is POSIX/Darwin-only (fenv.h, pthreads). It is not a
+// The IEEE 754 Shims FPU shim is POSIX/Darwin-only (fenv.h, pthreads). It is not a
 // dependency of the "IEEE 754" target on Windows (see Package.swift + the
-// CIEEE754_SHIM define), so compile this translation unit empty there rather
+// IEEE_754_SHIMS define), so compile this translation unit empty there rather
 // than fail on the unavailable <pthread.h>/<fenv.h> surface.
 #if !defined(_WIN32)
 

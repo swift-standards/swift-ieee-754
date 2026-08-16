@@ -1,21 +1,21 @@
-// CIEEE754 Integration Tests.swift
+// IEEE_754_Shims Integration Tests.swift
 // swift-ieee-754
 //
 // Integration tests for C target FPU control functions
 
 // The C shim is POSIX/Darwin-only and is not a dependency of this target on
 // Windows; compile these integration tests out there (mirrors the library's
-// CIEEE754_SHIM gating in Package.swift).
-#if CIEEE754_SHIM
+// IEEE_754_SHIMS gating in Package.swift).
+#if IEEE_754_SHIMS
 
-    import CIEEE754
+    import IEEE_754_Shims
     import Testing
 
     @testable import IEEE_754
 
     // MARK: - Rounding Mode Tests
 
-    @Suite("CIEEE754 - Rounding Mode Control")
+    @Suite("IEEE 754 Shims - Rounding Mode Control")
     struct CIEEERoundingModeTests {
         @Test func `Get Rounding Mode`() {
             // Should be able to query current rounding mode
@@ -86,7 +86,7 @@
 
     // MARK: - Thread-Local Exception Tests
 
-    @Suite("CIEEE754 - Thread-Local Exceptions", .serialized)
+    @Suite("IEEE 754 Shims - Thread-Local Exceptions", .serialized)
     struct CIEEEExceptionTests {
         @Test func `Initial Exception State`() {
             ieee754_clear_all_exceptions()
@@ -184,7 +184,7 @@
 
     // MARK: - Hardware FPU Exception Tests
 
-    @Suite("CIEEE754 - Hardware FPU Exceptions")
+    @Suite("IEEE 754 Shims - Hardware FPU Exceptions")
     struct CIEEEHardwareExceptionTests {
         @Test func `Clear FPU Exceptions`() {
             ieee754_clear_fpu_exceptions()
@@ -214,7 +214,7 @@
 
     // MARK: - Signaling Comparison Tests (Double)
 
-    @Suite("CIEEE754 - Signaling Comparisons (Double)", .serialized)
+    @Suite("IEEE 754 Shims - Signaling Comparisons (Double)", .serialized)
     struct CIEEESignalingCompareDoubleTests {
         @Test func `Signaling Equal Normal`() {
             ieee754_clear_all_exceptions()
@@ -304,7 +304,7 @@
 
     // MARK: - Signaling Comparison Tests (Float)
 
-    @Suite("CIEEE754 - Signaling Comparisons (Float)", .serialized)
+    @Suite("IEEE 754 Shims - Signaling Comparisons (Float)", .serialized)
     struct CIEEESignalingCompareFloatTests {
         @Test func `Signaling Equal Normal`() {
             ieee754_clear_all_exceptions()
@@ -353,7 +353,7 @@
 
     // MARK: - Integration Tests
 
-    @Suite("CIEEE754 - Integration Scenarios")
+    @Suite("IEEE 754 Shims - Integration Scenarios")
     struct CIEEEIntegrationTests {
         @Test func `Rounding Mode And Exceptions`() {
             // Use the combined scoped API for both rounding mode and exceptions
@@ -388,4 +388,4 @@
         }
     }
 
-#endif  // CIEEE754_SHIM
+#endif  // IEEE_754_SHIMS

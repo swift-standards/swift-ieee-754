@@ -336,8 +336,8 @@ extension IEEE_754.Exceptions.Test {
 // too, so a flag set through one path leaked into (or was masked by) the
 // other. These tests fail against the pre-fix source and pass post-fix.
 
-#if CIEEE754_SHIM
-    import CIEEE754
+#if IEEE_754_SHIMS
+    import IEEE_754_Shims
 
     extension IEEE_754.Exceptions.Test {
         @Suite("IEEE_754.Exceptions - Single Store Discipline", .serialized)

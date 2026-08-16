@@ -50,7 +50,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "CIEEE754",
+            name: "IEEE 754 Shims",
             dependencies: []
         ),
         .target(
@@ -60,19 +60,19 @@ let package = Package(
                 .product(name: "Decimal Primitives", package: "swift-decimal-primitives"),
                 .product(name: "Dependency Primitives", package: "swift-dependency-primitives"),
                 .target(
-                    name: "CIEEE754",
+                    name: "IEEE 754 Shims",
                     condition: .when(platforms: [.macOS, .linux, .iOS, .tvOS, .watchOS])
                 ),
             ],
-            // Gate the C-shim source paths on a define that mirrors the CIEEE754
-            // dependency condition exactly. `canImport(CIEEE754)` is unreliable
-            // here: the CIEEE754 target is built for the whole package graph, so
-            // canImport reports true on platforms (e.g. Windows) where CIEEE754
+            // Gate the C-shim source paths on a define that mirrors the IEEE_754_Shims
+            // dependency condition exactly. `canImport(IEEE_754_Shims)` is unreliable
+            // here: the IEEE_754_Shims target is built for the whole package graph, so
+            // canImport reports true on platforms (e.g. Windows) where IEEE_754_Shims
             // is deliberately NOT a dependency of this target — the guarded
-            // `import CIEEE754` then fails with "no such module 'CIEEE754'".
+            // `import IEEE_754_Shims` then fails with "no such module 'IEEE_754_Shims'".
             swiftSettings: [
                 .define(
-                    "CIEEE754_SHIM",
+                    "IEEE_754_SHIMS",
                     .when(platforms: [.macOS, .linux, .iOS, .tvOS, .watchOS])
                 )
             ]
@@ -86,7 +86,7 @@ let package = Package(
                     package: "swift-standard-library-extensions"
                 ),
                 .target(
-                    name: "CIEEE754",
+                    name: "IEEE 754 Shims",
                     condition: .when(platforms: [.macOS, .linux, .iOS, .tvOS, .watchOS])
                 ),
             ],
@@ -94,7 +94,7 @@ let package = Package(
             // integration tests compile out on Windows (see the note above).
             swiftSettings: [
                 .define(
-                    "CIEEE754_SHIM",
+                    "IEEE_754_SHIMS",
                     .when(platforms: [.macOS, .linux, .iOS, .tvOS, .watchOS])
                 )
             ]
