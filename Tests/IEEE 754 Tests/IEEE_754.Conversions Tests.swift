@@ -12,7 +12,9 @@ import Testing
 extension IEEE_754.Conversions {
     @Suite("IEEE_754.Conversions - Float to Double")
     struct Test {
-        @Test(arguments: [Float(3.14), Float(-3.14), Float(0.0), Float(-0.0), Float(1.0), Float(100.0)])
+        @Test(arguments: [
+            Float(3.14), Float(-3.14), Float(0.0), Float(-0.0), Float(1.0), Float(100.0),
+        ])
         func `Exact Conversion`(value: Float) {
             let result = IEEE_754.Conversions.floatToDouble(value)
             #expect(Double(value) == result, "Conversion should be exact")
@@ -59,7 +61,10 @@ extension IEEE_754.Conversions.Test {
         @Test func underflow() {
             let tiny = 1e-50  // Much smaller than Float min
             let result = IEEE_754.Conversions.doubleToFloat(tiny)
-            #expect(result == 0.0 || result.isSubnormal, "Underflow should produce zero or subnormal")
+            #expect(
+                result == 0.0 || result.isSubnormal,
+                "Underflow should produce zero or subnormal"
+            )
         }
 
         @Test func `Special Values`() {
@@ -95,8 +100,14 @@ extension IEEE_754.Conversions.Test {
 
         @Test func `Special Values`() {
             #expect(IEEE_754.Conversions.doubleToInt(Double.nan) == nil, "NaN should return nil")
-            #expect(IEEE_754.Conversions.doubleToInt(Double.infinity) == nil, "Infinity should return nil")
-            #expect(IEEE_754.Conversions.doubleToInt(-Double.infinity) == nil, "-Infinity should return nil")
+            #expect(
+                IEEE_754.Conversions.doubleToInt(Double.infinity) == nil,
+                "Infinity should return nil"
+            )
+            #expect(
+                IEEE_754.Conversions.doubleToInt(-Double.infinity) == nil,
+                "-Infinity should return nil"
+            )
         }
 
         @Test func `Exact Values`() {
@@ -109,8 +120,14 @@ extension IEEE_754.Conversions.Test {
         @Test func `Out Of Range`() {
             let tooLarge = Double(Int.max) + 1.0e10
             let tooSmall = Double(Int.min) - 1.0e10
-            #expect(IEEE_754.Conversions.doubleToInt(tooLarge) == nil, "Out of range should return nil")
-            #expect(IEEE_754.Conversions.doubleToInt(tooSmall) == nil, "Out of range should return nil")
+            #expect(
+                IEEE_754.Conversions.doubleToInt(tooLarge) == nil,
+                "Out of range should return nil"
+            )
+            #expect(
+                IEEE_754.Conversions.doubleToInt(tooSmall) == nil,
+                "Out of range should return nil"
+            )
         }
     }
 }
@@ -457,7 +474,10 @@ extension IEEE_754.Conversions.Test {
             if value.isNaN {
                 #expect(backToFloat.isNaN, "NaN should round-trip")
             } else if value.isZero {
-                #expect(backToFloat.isZero && backToFloat.sign == value.sign, "Signed zero should round-trip")
+                #expect(
+                    backToFloat.isZero && backToFloat.sign == value.sign,
+                    "Signed zero should round-trip"
+                )
             } else {
                 #expect(backToFloat == value, "Float → Double → Float should preserve value")
             }
@@ -467,7 +487,10 @@ extension IEEE_754.Conversions.Test {
         func `Int Double Int Round Trip`(value: Int) {
             let asDouble = IEEE_754.Conversions.intToDouble(value)
             let backToInt = IEEE_754.Conversions.doubleToIntTruncating(asDouble)
-            #expect(backToInt == value, "Int → Double → Int should preserve value for small integers")
+            #expect(
+                backToInt == value,
+                "Int → Double → Int should preserve value for small integers"
+            )
         }
     }
 }

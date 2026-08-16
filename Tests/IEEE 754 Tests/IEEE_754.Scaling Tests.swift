@@ -42,7 +42,10 @@ extension IEEE_754.Scaling {
         @Test func `special Values`() {
             #expect(IEEE_754.Scaling.scaleB(0.0, 10) == 0.0, "scaleB(0, n) should be 0")
             #expect(IEEE_754.Scaling.scaleB(-0.0, 10) == -0.0, "scaleB(-0, n) should be -0")
-            #expect(IEEE_754.Scaling.scaleB(Double.infinity, 10).isInfinite, "scaleB(inf, n) should be inf")
+            #expect(
+                IEEE_754.Scaling.scaleB(Double.infinity, 10).isInfinite,
+                "scaleB(inf, n) should be inf"
+            )
             #expect(IEEE_754.Scaling.scaleB(Double.nan, 10).isNaN, "scaleB(NaN, n) should be NaN")
         }
 
@@ -74,7 +77,10 @@ extension IEEE_754.Scaling.Test {
             (0.25, -2),
         ])
         func `powers Of Two`(value: Double, expected: Int) {
-            #expect(IEEE_754.Scaling.logB(value) == expected, "logB(\(value)) should be \(expected)")
+            #expect(
+                IEEE_754.Scaling.logB(value) == expected,
+                "logB(\(value)) should be \(expected)"
+            )
         }
 
         @Test func `range Values`() {
@@ -86,8 +92,14 @@ extension IEEE_754.Scaling.Test {
         @Test func `special Values`() {
             #expect(IEEE_754.Scaling.logB(0.0) == Int.min, "logB(0) should be Int.min")
             #expect(IEEE_754.Scaling.logB(-0.0) == Int.min, "logB(-0) should be Int.min")
-            #expect(IEEE_754.Scaling.logB(Double.infinity) == Int.max, "logB(inf) should be Int.max")
-            #expect(IEEE_754.Scaling.logB(-Double.infinity) == Int.max, "logB(-inf) should be Int.max")
+            #expect(
+                IEEE_754.Scaling.logB(Double.infinity) == Int.max,
+                "logB(inf) should be Int.max"
+            )
+            #expect(
+                IEEE_754.Scaling.logB(-Double.infinity) == Int.max,
+                "logB(-inf) should be Int.max"
+            )
             #expect(IEEE_754.Scaling.logB(Double.nan) == Int.max, "logB(NaN) should be Int.max")
         }
 
@@ -114,12 +126,21 @@ extension IEEE_754.Scaling.Test {
             (0.5, -1.0),
         ])
         func `powers Of Two`(value: Double, expected: Double) {
-            #expect(IEEE_754.Scaling.exponent(value) == expected, "exponent(\(value)) should be \(expected)")
+            #expect(
+                IEEE_754.Scaling.exponent(value) == expected,
+                "exponent(\(value)) should be \(expected)"
+            )
         }
 
         @Test func `special Values`() {
-            #expect(IEEE_754.Scaling.exponent(0.0) == -Double.infinity, "exponent(0) should be -infinity")
-            #expect(IEEE_754.Scaling.exponent(Double.infinity) == Double.infinity, "exponent(inf) should be infinity")
+            #expect(
+                IEEE_754.Scaling.exponent(0.0) == -Double.infinity,
+                "exponent(0) should be -infinity"
+            )
+            #expect(
+                IEEE_754.Scaling.exponent(Double.infinity) == Double.infinity,
+                "exponent(inf) should be infinity"
+            )
             #expect(IEEE_754.Scaling.exponent(Double.nan).isNaN, "exponent(NaN) should be NaN")
         }
     }
@@ -135,8 +156,14 @@ extension IEEE_754.Scaling.Test {
         }
 
         @Test func `non Powers Of Two`() {
-            #expect(IEEE_754.Scaling.significand(12.0) == 1.5, "significand(12.0) should be 1.5 (12 = 1.5 × 2^3)")
-            #expect(IEEE_754.Scaling.significand(6.0) == 1.5, "significand(6.0) should be 1.5 (6 = 1.5 × 2^2)")
+            #expect(
+                IEEE_754.Scaling.significand(12.0) == 1.5,
+                "significand(12.0) should be 1.5 (12 = 1.5 × 2^3)"
+            )
+            #expect(
+                IEEE_754.Scaling.significand(6.0) == 1.5,
+                "significand(6.0) should be 1.5 (6 = 1.5 × 2^2)"
+            )
         }
 
         @Test func `value Reconstruction`() {
@@ -149,8 +176,14 @@ extension IEEE_754.Scaling.Test {
 
         @Test func `special Values`() {
             #expect(IEEE_754.Scaling.significand(0.0) == 0.0, "significand(0) should be 0")
-            #expect(IEEE_754.Scaling.significand(Double.infinity).isInfinite, "significand(inf) should be inf")
-            #expect(IEEE_754.Scaling.significand(Double.nan).isNaN, "significand(NaN) should be NaN")
+            #expect(
+                IEEE_754.Scaling.significand(Double.infinity).isInfinite,
+                "significand(inf) should be inf"
+            )
+            #expect(
+                IEEE_754.Scaling.significand(Double.nan).isNaN,
+                "significand(NaN) should be NaN"
+            )
         }
     }
 }
@@ -178,8 +211,14 @@ extension IEEE_754.Scaling.Test {
         }
 
         @Test func `special Values`() {
-            #expect(IEEE_754.Scaling.scaleB(Float(0.0), 10) == Float(0.0), "scaleB(0, n) should be 0")
-            #expect(IEEE_754.Scaling.scaleB(Float.infinity, 10).isInfinite, "scaleB(inf, n) should be inf")
+            #expect(
+                IEEE_754.Scaling.scaleB(Float(0.0), 10) == Float(0.0),
+                "scaleB(0, n) should be 0"
+            )
+            #expect(
+                IEEE_754.Scaling.scaleB(Float.infinity, 10).isInfinite,
+                "scaleB(inf, n) should be inf"
+            )
             #expect(IEEE_754.Scaling.scaleB(Float.nan, 10).isNaN, "scaleB(NaN, n) should be NaN")
         }
     }
@@ -195,7 +234,10 @@ extension IEEE_754.Scaling.Test {
             (Float(0.5), -1),
         ])
         func `powers Of Two`(value: Float, expected: Int) {
-            #expect(IEEE_754.Scaling.logB(value) == expected, "logB(\(value)) should be \(expected)")
+            #expect(
+                IEEE_754.Scaling.logB(value) == expected,
+                "logB(\(value)) should be \(expected)"
+            )
         }
 
         @Test func `special Values`() {
@@ -215,12 +257,21 @@ extension IEEE_754.Scaling.Test {
             (Float(8.0), Float(3.0)),
         ])
         func `powers Of Two`(value: Float, expected: Float) {
-            #expect(IEEE_754.Scaling.exponent(value) == expected, "exponent(\(value)) should be \(expected)")
+            #expect(
+                IEEE_754.Scaling.exponent(value) == expected,
+                "exponent(\(value)) should be \(expected)"
+            )
         }
 
         @Test func `special Values`() {
-            #expect(IEEE_754.Scaling.exponent(Float(0.0)) == -Float.infinity, "exponent(0) should be -infinity")
-            #expect(IEEE_754.Scaling.exponent(Float.infinity) == Float.infinity, "exponent(inf) should be infinity")
+            #expect(
+                IEEE_754.Scaling.exponent(Float(0.0)) == -Float.infinity,
+                "exponent(0) should be -infinity"
+            )
+            #expect(
+                IEEE_754.Scaling.exponent(Float.infinity) == Float.infinity,
+                "exponent(inf) should be infinity"
+            )
             #expect(IEEE_754.Scaling.exponent(Float.nan).isNaN, "exponent(NaN) should be NaN")
         }
     }
@@ -230,8 +281,14 @@ extension IEEE_754.Scaling.Test {
     @Suite("IEEE_754.Scaling - Float significand")
     struct FloatSignificand {
         @Test func `powers Of Two`() {
-            #expect(IEEE_754.Scaling.significand(Float(8.0)) == Float(1.0), "significand(8.0) should be 1.0")
-            #expect(IEEE_754.Scaling.significand(Float(4.0)) == Float(1.0), "significand(4.0) should be 1.0")
+            #expect(
+                IEEE_754.Scaling.significand(Float(8.0)) == Float(1.0),
+                "significand(8.0) should be 1.0"
+            )
+            #expect(
+                IEEE_754.Scaling.significand(Float(4.0)) == Float(1.0),
+                "significand(4.0) should be 1.0"
+            )
         }
 
         @Test func `value Reconstruction`() {
@@ -261,7 +318,10 @@ extension IEEE_754.Scaling.Test {
         @Test func `normal To Subnormal`() {
             let normal = Double.leastNormalMagnitude
             let subnorm = IEEE_754.Scaling.scaleB(normal, -1)
-            #expect(subnorm.isSubnormal, "Scaling leastNormalMagnitude down should produce subnormal")
+            #expect(
+                subnorm.isSubnormal,
+                "Scaling leastNormalMagnitude down should produce subnormal"
+            )
         }
 
         @Test func `exact Boundaries`() {

@@ -153,7 +153,10 @@ extension Double.Test {
                 let bytes = value.bytes()
                 let restored = Double(bytes: bytes)
 
-                #expect(restored == value, "Exponent \(expValue) (2^\(biasedExp)) should round-trip")
+                #expect(
+                    restored == value,
+                    "Exponent \(expValue) (2^\(biasedExp)) should round-trip"
+                )
             }
         }
 
@@ -223,7 +226,7 @@ extension IEEE_754.Binary64.Test {
                 let value = IEEE_754.Binary64.value(from: bytes)
                 #expect(value != nil, "Single bit at position \(bitPosition) should decode")
 
-                if let value = value {
+                if let value {
                     let roundTrip = value.bytes()
                     let restored = IEEE_754.Binary64.value(from: roundTrip)
                     #expect(restored == value, "Bit \(bitPosition) should round-trip")
@@ -235,7 +238,8 @@ extension IEEE_754.Binary64.Test {
             // Test with exponent = 1023 (unbiased 0, value = 1.0 * 2^0)
             // Significand bits represent fractional parts
             for bitPosition in 0..<10 {  // Test first 10 positions as sample
-                var bytes: [UInt8] = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0x3F]  // Exponent = 1023
+                // Exponent = 1023
+                var bytes: [UInt8] = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0x3F]
 
                 let byteIndex = bitPosition / 8
                 let bitIndex = bitPosition % 8
@@ -244,7 +248,7 @@ extension IEEE_754.Binary64.Test {
                 let value = IEEE_754.Binary64.value(from: bytes)
                 #expect(value != nil, "Bit \(bitPosition) with normal exponent should decode")
 
-                if let value = value {
+                if let value {
                     let roundTrip = value.bytes()
                     #expect(IEEE_754.Binary64.value(from: roundTrip) == value, "Should round-trip")
                 }
@@ -267,7 +271,7 @@ extension IEEE_754.Binary32.Test {
                 let value = IEEE_754.Binary32.value(from: bytes)
                 #expect(value != nil, "Single bit at position \(bitPosition) should decode")
 
-                if let value = value {
+                if let value {
                     let roundTrip = value.bytes()
                     let restored = IEEE_754.Binary32.value(from: roundTrip)
                     #expect(restored == value, "Bit \(bitPosition) should round-trip")
@@ -288,7 +292,7 @@ struct NegativeNaNTests {
 
         #expect(value?.isNaN == true, "Negative NaN should be recognized as NaN")
 
-        if let value = value {
+        if let value {
             let roundTrip = value.bytes()
             let restored = IEEE_754.Binary64.value(from: roundTrip)
             #expect(restored?.isNaN == true, "Should remain NaN after round-trip")
@@ -301,7 +305,7 @@ struct NegativeNaNTests {
 
         #expect(value?.isNaN == true, "Negative NaN should be recognized as NaN")
 
-        if let value = value {
+        if let value {
             let roundTrip = value.bytes()
             let restored = IEEE_754.Binary32.value(from: roundTrip)
             #expect(restored?.isNaN == true, "Should remain NaN after round-trip")
@@ -393,7 +397,7 @@ extension Double.Test {
                 let value = IEEE_754.Binary64.value(from: pattern)
                 #expect(value != nil, "Should decode pattern \(pattern)")
 
-                if let value = value, !value.isNaN {
+                if let value, !value.isNaN {
                     let roundTrip = value.bytes()
                     #expect(roundTrip == pattern, "Should produce identical bytes")
                 }

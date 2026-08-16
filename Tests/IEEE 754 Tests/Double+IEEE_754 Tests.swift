@@ -27,7 +27,10 @@ extension Double {
                 #expect(restored?.isNaN == true, "NaN should round-trip")
             } else if value == 0 && value.sign == .minus {
                 // Negative zero
-                #expect(restored == value && restored!.sign == .minus, "Negative zero should preserve sign")
+                #expect(
+                    restored == value && restored!.sign == .minus,
+                    "Negative zero should preserve sign"
+                )
             } else {
                 #expect(restored == value, "\(value) should round-trip through bytes()")
             }

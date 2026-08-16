@@ -31,9 +31,15 @@ extension Double.Test {
             let littleBytes = value.bytes(endianness: .little)
             let bigBytes = value.bytes(endianness: .big)
 
-            #expect(littleBytes != bigBytes, "Little and big endian should produce different byte order")
+            #expect(
+                littleBytes != bigBytes,
+                "Little and big endian should produce different byte order"
+            )
             #expect(littleBytes.count == bigBytes.count, "Both should produce same byte count")
-            #expect(littleBytes == bigBytes.reversed(), "Big endian should be reverse of little endian")
+            #expect(
+                littleBytes == bigBytes.reversed(),
+                "Big endian should be reverse of little endian"
+            )
         }
 
         @Test func `default is little-endian`() {
@@ -58,7 +64,10 @@ extension Double.Test {
 extension Float.Test {
     @Suite("IEEE 754 - Float Endianness")
     struct Endianness {
-        @Test(arguments: [Float(3.14159), Float(2.71828), Float(1.41421), Float(0.0), Float(1.0), Float(-1.0), Float(42.0)])
+        @Test(arguments: [
+            Float(3.14159), Float(2.71828), Float(1.41421), Float(0.0), Float(1.0), Float(-1.0),
+            Float(42.0),
+        ])
         func `little-endian round-trip`(value: Float) {
             let bytes = value.bytes(endianness: .little)
             let restored = Float(bytes: bytes, endianness: .little)
@@ -66,7 +75,10 @@ extension Float.Test {
             #expect(restored == value, "\(value) should round-trip with little-endian")
         }
 
-        @Test(arguments: [Float(3.14159), Float(2.71828), Float(1.41421), Float(0.0), Float(1.0), Float(-1.0), Float(42.0)])
+        @Test(arguments: [
+            Float(3.14159), Float(2.71828), Float(1.41421), Float(0.0), Float(1.0), Float(-1.0),
+            Float(42.0),
+        ])
         func `big-endian round-trip`(value: Float) {
             let bytes = value.bytes(endianness: .big)
             let restored = Float(bytes: bytes, endianness: .big)
@@ -79,9 +91,15 @@ extension Float.Test {
             let littleBytes = value.bytes(endianness: .little)
             let bigBytes = value.bytes(endianness: .big)
 
-            #expect(littleBytes != bigBytes, "Little and big endian should produce different byte order")
+            #expect(
+                littleBytes != bigBytes,
+                "Little and big endian should produce different byte order"
+            )
             #expect(littleBytes.count == bigBytes.count, "Both should produce same byte count")
-            #expect(littleBytes == bigBytes.reversed(), "Big endian should be reverse of little endian")
+            #expect(
+                littleBytes == bigBytes.reversed(),
+                "Big endian should be reverse of little endian"
+            )
         }
 
         @Test func `default is little-endian`() {

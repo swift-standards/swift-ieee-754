@@ -85,12 +85,16 @@ extension IEEE_754.Rounding {
         switch direction {
         case .towardInfinity(.negative):
             return value.rounded(.down)
+
         case .towardInfinity(.positive):
             return value.rounded(.up)
+
         case .towardZero:
             return value.rounded(.towardZero)
+
         case .toNearest(.toEven):
             return value.rounded(.toNearestOrEven)
+
         case .toNearest(.awayFromZero):
             return value.rounded(.toNearestOrAwayFromZero)
         }
@@ -109,12 +113,16 @@ extension IEEE_754.Rounding {
         switch direction {
         case .towardInfinity(.negative):
             return value.rounded(.down)
+
         case .towardInfinity(.positive):
             return value.rounded(.up)
+
         case .towardZero:
             return value.rounded(.towardZero)
+
         case .toNearest(.toEven):
             return value.rounded(.toNearestOrEven)
+
         case .toNearest(.awayFromZero):
             return value.rounded(.toNearestOrAwayFromZero)
         }

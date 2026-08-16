@@ -81,6 +81,7 @@ extension IEEE_754.Payload {
         switch type {
         case .quiet(let payload):
             return encodeQuietNaN(payload: payload)
+
         case .signaling(let payload):
             return encodeSignalingNaN(payload: payload)
         }
@@ -97,6 +98,7 @@ extension IEEE_754.Payload {
         switch type {
         case .quiet(let payload):
             return encodeQuietNaN(payload: UInt32(payload & 0x001F_FFFF))
+
         case .signaling(let payload):
             return encodeSignalingNaN(payload: UInt32(payload & 0x001F_FFFF))
         }
@@ -172,9 +174,7 @@ extension IEEE_754.Payload {
         // Keep payload bits (bits 50-0)
         // IEEE 754-2019 Section 6.2.1: Payload is fraction bits excluding quiet/signaling bit
         let payloadMask: UInt64 = 0x0007_FFFF_FFFF_FFFF
-        let payload = bits & payloadMask
-
-        return payload
+        return bits & payloadMask
     }
 
     /// Encode quiet NaN with payload - IEEE 754 related operation
@@ -289,9 +289,7 @@ extension IEEE_754.Payload {
         // Keep payload bits (bits 21-0)
         // IEEE 754-2019 Section 6.2.1: Payload is fraction bits excluding quiet/signaling bit
         let payloadMask: UInt32 = 0x001F_FFFF
-        let payload = bits & payloadMask
-
-        return payload
+        return bits & payloadMask
     }
 
     /// Encode quiet NaN with payload

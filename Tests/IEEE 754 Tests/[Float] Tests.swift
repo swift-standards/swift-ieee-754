@@ -147,7 +147,7 @@ struct `[Float] Tests` {
         #expect(deserialized != nil)
         #expect(deserialized?.count == 6)
 
-        if let deserialized = deserialized {
+        if let deserialized {
             #expect(deserialized[0] == -100.5)
             #expect(deserialized[1] == 0.0)
             #expect(deserialized[2] == 100.5)
