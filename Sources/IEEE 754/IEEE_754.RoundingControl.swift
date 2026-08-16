@@ -158,9 +158,17 @@
             _ body: () throws(E) -> T
         ) throws(E) -> T {
             let originalMode = get()
-            try? set(mode)
+            do {
+                try set(mode)
+            } catch {
+                preconditionFailure("The requested IEEE 754 rounding mode is unsupported")
+            }
             defer {
-                try? set(originalMode)
+                do {
+                    try set(originalMode)
+                } catch {
+                    preconditionFailure("The original IEEE 754 rounding mode could not be restored")
+                }
             }
             return try body()
         }

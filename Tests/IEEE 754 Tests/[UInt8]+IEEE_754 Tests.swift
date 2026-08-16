@@ -35,7 +35,9 @@ struct `[UInt8] Tests` {
 
 @Suite
 struct `[UInt8] Float Serialization Tests` {
-    @Test(arguments: [Float(3.14159), Float(2.71828), Float(1.41421), Float(0.0), Float(1.0), Float(-1.0)])
+    @Test(arguments: [
+        Float(3.14159), Float(2.71828), Float(1.41421), Float(0.0), Float(1.0), Float(-1.0),
+    ])
     func `unlabeled init with Float`(value: Float) {
         let bytes = [UInt8](value)
         let restored = Float(bytes: bytes)

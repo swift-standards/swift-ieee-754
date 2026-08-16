@@ -85,14 +85,19 @@ extension IEEE_754.Comparison {
         switch predicate {
         case .equality(.equal):
             return lhs == rhs
+
         case .equality(.notEqual):
             return lhs != rhs
+
         case .ordering(.less(orEqual: false)):
             return lhs < rhs
+
         case .ordering(.less(orEqual: true)):
             return lhs <= rhs
+
         case .ordering(.greater(orEqual: false)):
             return lhs > rhs
+
         case .ordering(.greater(orEqual: true)):
             return lhs >= rhs
         }
@@ -112,14 +117,19 @@ extension IEEE_754.Comparison {
         switch predicate {
         case .equality(.equal):
             return lhs == rhs
+
         case .equality(.notEqual):
             return lhs != rhs
+
         case .ordering(.less(orEqual: false)):
             return lhs < rhs
+
         case .ordering(.less(orEqual: true)):
             return lhs <= rhs
+
         case .ordering(.greater(orEqual: false)):
             return lhs > rhs
+
         case .ordering(.greater(orEqual: true)):
             return lhs >= rhs
         }

@@ -259,6 +259,7 @@ extension IEEE_754.Binary32 {
             switch endianness {
             case .little:
                 return UInt32(littleEndian: loaded)
+
             case .big:
                 return UInt32(bigEndian: loaded)
             }

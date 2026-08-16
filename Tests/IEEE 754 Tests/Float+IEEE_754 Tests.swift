@@ -27,7 +27,10 @@ extension Float {
                 #expect(restored?.isNaN == true, "NaN should round-trip")
             } else if value == 0 && value.sign == .minus {
                 // Negative zero
-                #expect(restored == value && restored!.sign == .minus, "Negative zero should preserve sign")
+                #expect(
+                    restored == value && restored!.sign == .minus,
+                    "Negative zero should preserve sign"
+                )
             } else {
                 #expect(restored == value, "\(value) should round-trip through bytes()")
             }
@@ -75,7 +78,9 @@ extension Float.Test {
 extension Float.Test {
     @Suite("Float+IEEE_754 - Canonical init")
     struct CanonicalInit {
-        @Test(arguments: [Float(3.14159), Float(2.71828), Float(1.41421), Float(0.0), Float(1.0), Float(-1.0)])
+        @Test(arguments: [
+            Float(3.14159), Float(2.71828), Float(1.41421), Float(0.0), Float(1.0), Float(-1.0),
+        ])
         func `canonical init bytes parameter`(value: Float) {
             let bytes = value.bytes()
             let restored = Float(bytes: bytes)

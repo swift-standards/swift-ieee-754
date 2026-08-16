@@ -73,9 +73,18 @@ extension IEEE_754.MinMax.Test {
         }
 
         @Test func `nan Preference`() {
-            #expect(IEEE_754.MinMax.minimumNumber(Double.nan, 3.14) == 3.14, "Prefer number over NaN")
-            #expect(IEEE_754.MinMax.minimumNumber(3.14, Double.nan) == 3.14, "Prefer number over NaN")
-            #expect(IEEE_754.MinMax.minimumNumber(Double.nan, Double.nan).isNaN, "Both NaN returns NaN")
+            #expect(
+                IEEE_754.MinMax.minimumNumber(Double.nan, 3.14) == 3.14,
+                "Prefer number over NaN"
+            )
+            #expect(
+                IEEE_754.MinMax.minimumNumber(3.14, Double.nan) == 3.14,
+                "Prefer number over NaN"
+            )
+            #expect(
+                IEEE_754.MinMax.minimumNumber(Double.nan, Double.nan).isNaN,
+                "Both NaN returns NaN"
+            )
         }
 
         @Test func `signed Zeros`() {
@@ -94,9 +103,18 @@ extension IEEE_754.MinMax.Test {
         }
 
         @Test func `nan Preference`() {
-            #expect(IEEE_754.MinMax.maximumNumber(Double.nan, 3.14) == 3.14, "Prefer number over NaN")
-            #expect(IEEE_754.MinMax.maximumNumber(3.14, Double.nan) == 3.14, "Prefer number over NaN")
-            #expect(IEEE_754.MinMax.maximumNumber(Double.nan, Double.nan).isNaN, "Both NaN returns NaN")
+            #expect(
+                IEEE_754.MinMax.maximumNumber(Double.nan, 3.14) == 3.14,
+                "Prefer number over NaN"
+            )
+            #expect(
+                IEEE_754.MinMax.maximumNumber(3.14, Double.nan) == 3.14,
+                "Prefer number over NaN"
+            )
+            #expect(
+                IEEE_754.MinMax.maximumNumber(Double.nan, Double.nan).isNaN,
+                "Both NaN returns NaN"
+            )
         }
     }
 }
@@ -107,7 +125,10 @@ extension IEEE_754.MinMax.Test {
         @Test func `by Absolute Value`() {
             #expect(IEEE_754.MinMax.minimumMagnitude(3.14, -2.71) == -2.71, "Select by magnitude")
             #expect(IEEE_754.MinMax.minimumMagnitude(-3.14, 2.71) == 2.71, "Select by magnitude")
-            #expect(IEEE_754.MinMax.minimumMagnitude(-3.14, 3.14) == -3.14, "Equal magnitude: tie-break by sign")
+            #expect(
+                IEEE_754.MinMax.minimumMagnitude(-3.14, 3.14) == -3.14,
+                "Equal magnitude: tie-break by sign"
+            )
         }
 
         @Test func `nan Propagation`() {
@@ -116,8 +137,14 @@ extension IEEE_754.MinMax.Test {
         }
 
         @Test func `zero Handling`() {
-            #expect(IEEE_754.MinMax.minimumMagnitude(0.0, 3.14) == 0.0, "Zero has smallest magnitude")
-            #expect(IEEE_754.MinMax.minimumMagnitude(-0.0, 3.14) == -0.0, "Zero has smallest magnitude")
+            #expect(
+                IEEE_754.MinMax.minimumMagnitude(0.0, 3.14) == 0.0,
+                "Zero has smallest magnitude"
+            )
+            #expect(
+                IEEE_754.MinMax.minimumMagnitude(-0.0, 3.14) == -0.0,
+                "Zero has smallest magnitude"
+            )
         }
     }
 }
@@ -138,10 +165,12 @@ extension IEEE_754.MinMax.Test {
         @Test func infinities() {
             #expect(
                 IEEE_754.MinMax.maximumMagnitude(Double.infinity, 100.0) == Double.infinity,
-                "Infinity has largest magnitude")
+                "Infinity has largest magnitude"
+            )
             #expect(
                 IEEE_754.MinMax.maximumMagnitude(-Double.infinity, 100.0) == -Double.infinity,
-                "Negative infinity has largest magnitude")
+                "Negative infinity has largest magnitude"
+            )
         }
     }
 }
@@ -150,13 +179,25 @@ extension IEEE_754.MinMax.Test {
     @Suite("IEEE_754.MinMax - Double minimumMagnitudeNumber")
     struct DoubleMinimumMagnitudeNumber {
         @Test func `by Absolute Value`() {
-            #expect(IEEE_754.MinMax.minimumMagnitudeNumber(3.14, -2.71) == -2.71, "Select by magnitude")
-            #expect(IEEE_754.MinMax.minimumMagnitudeNumber(-3.14, 2.71) == 2.71, "Select by magnitude")
+            #expect(
+                IEEE_754.MinMax.minimumMagnitudeNumber(3.14, -2.71) == -2.71,
+                "Select by magnitude"
+            )
+            #expect(
+                IEEE_754.MinMax.minimumMagnitudeNumber(-3.14, 2.71) == 2.71,
+                "Select by magnitude"
+            )
         }
 
         @Test func `nan Preference`() {
-            #expect(IEEE_754.MinMax.minimumMagnitudeNumber(Double.nan, 3.14) == 3.14, "Prefer number over NaN")
-            #expect(IEEE_754.MinMax.minimumMagnitudeNumber(3.14, Double.nan) == 3.14, "Prefer number over NaN")
+            #expect(
+                IEEE_754.MinMax.minimumMagnitudeNumber(Double.nan, 3.14) == 3.14,
+                "Prefer number over NaN"
+            )
+            #expect(
+                IEEE_754.MinMax.minimumMagnitudeNumber(3.14, Double.nan) == 3.14,
+                "Prefer number over NaN"
+            )
         }
     }
 }
@@ -165,13 +206,25 @@ extension IEEE_754.MinMax.Test {
     @Suite("IEEE_754.MinMax - Double maximumMagnitudeNumber")
     struct DoubleMaximumMagnitudeNumber {
         @Test func `by Absolute Value`() {
-            #expect(IEEE_754.MinMax.maximumMagnitudeNumber(3.14, -2.71) == 3.14, "Select by magnitude")
-            #expect(IEEE_754.MinMax.maximumMagnitudeNumber(-3.14, 2.71) == -3.14, "Select by magnitude")
+            #expect(
+                IEEE_754.MinMax.maximumMagnitudeNumber(3.14, -2.71) == 3.14,
+                "Select by magnitude"
+            )
+            #expect(
+                IEEE_754.MinMax.maximumMagnitudeNumber(-3.14, 2.71) == -3.14,
+                "Select by magnitude"
+            )
         }
 
         @Test func `nan Preference`() {
-            #expect(IEEE_754.MinMax.maximumMagnitudeNumber(Double.nan, 3.14) == 3.14, "Prefer number over NaN")
-            #expect(IEEE_754.MinMax.maximumMagnitudeNumber(3.14, Double.nan) == 3.14, "Prefer number over NaN")
+            #expect(
+                IEEE_754.MinMax.maximumMagnitudeNumber(Double.nan, 3.14) == 3.14,
+                "Prefer number over NaN"
+            )
+            #expect(
+                IEEE_754.MinMax.maximumMagnitudeNumber(3.14, Double.nan) == 3.14,
+                "Prefer number over NaN"
+            )
         }
     }
 }
@@ -181,7 +234,9 @@ extension IEEE_754.MinMax.Test {
 extension IEEE_754.MinMax.Test {
     @Suite("IEEE_754.MinMax - Float minimum")
     struct FloatMinimum {
-        @Test(arguments: [(Float(3.14), Float(2.71), Float(2.71)), (Float(2.71), Float(3.14), Float(2.71))])
+        @Test(arguments: [
+            (Float(3.14), Float(2.71), Float(2.71)), (Float(2.71), Float(3.14), Float(2.71)),
+        ])
         func `normal Values`(x: Float, y: Float, expected: Float) {
             #expect(IEEE_754.MinMax.minimum(x, y) == expected)
         }
@@ -200,7 +255,9 @@ extension IEEE_754.MinMax.Test {
 extension IEEE_754.MinMax.Test {
     @Suite("IEEE_754.MinMax - Float maximum")
     struct FloatMaximum {
-        @Test(arguments: [(Float(3.14), Float(2.71), Float(3.14)), (Float(2.71), Float(3.14), Float(3.14))])
+        @Test(arguments: [
+            (Float(3.14), Float(2.71), Float(3.14)), (Float(2.71), Float(3.14), Float(3.14)),
+        ])
         func `normal Values`(x: Float, y: Float, expected: Float) {
             #expect(IEEE_754.MinMax.maximum(x, y) == expected)
         }
@@ -216,8 +273,14 @@ extension IEEE_754.MinMax.Test {
     @Suite("IEEE_754.MinMax - Float minimumNumber")
     struct FloatMinimumNumber {
         @Test func `nan Preference`() {
-            #expect(IEEE_754.MinMax.minimumNumber(Float.nan, Float(3.14)) == Float(3.14), "Prefer number over NaN")
-            #expect(IEEE_754.MinMax.minimumNumber(Float(3.14), Float.nan) == Float(3.14), "Prefer number over NaN")
+            #expect(
+                IEEE_754.MinMax.minimumNumber(Float.nan, Float(3.14)) == Float(3.14),
+                "Prefer number over NaN"
+            )
+            #expect(
+                IEEE_754.MinMax.minimumNumber(Float(3.14), Float.nan) == Float(3.14),
+                "Prefer number over NaN"
+            )
         }
     }
 }
@@ -226,8 +289,14 @@ extension IEEE_754.MinMax.Test {
     @Suite("IEEE_754.MinMax - Float maximumNumber")
     struct FloatMaximumNumber {
         @Test func `nan Preference`() {
-            #expect(IEEE_754.MinMax.maximumNumber(Float.nan, Float(3.14)) == Float(3.14), "Prefer number over NaN")
-            #expect(IEEE_754.MinMax.maximumNumber(Float(3.14), Float.nan) == Float(3.14), "Prefer number over NaN")
+            #expect(
+                IEEE_754.MinMax.maximumNumber(Float.nan, Float(3.14)) == Float(3.14),
+                "Prefer number over NaN"
+            )
+            #expect(
+                IEEE_754.MinMax.maximumNumber(Float(3.14), Float.nan) == Float(3.14),
+                "Prefer number over NaN"
+            )
         }
     }
 }
@@ -236,8 +305,14 @@ extension IEEE_754.MinMax.Test {
     @Suite("IEEE_754.MinMax - Float minimumMagnitude")
     struct FloatMinimumMagnitude {
         @Test func `by Absolute Value`() {
-            #expect(IEEE_754.MinMax.minimumMagnitude(Float(3.14), Float(-2.71)) == Float(-2.71), "Select by magnitude")
-            #expect(IEEE_754.MinMax.minimumMagnitude(Float(-3.14), Float(2.71)) == Float(2.71), "Select by magnitude")
+            #expect(
+                IEEE_754.MinMax.minimumMagnitude(Float(3.14), Float(-2.71)) == Float(-2.71),
+                "Select by magnitude"
+            )
+            #expect(
+                IEEE_754.MinMax.minimumMagnitude(Float(-3.14), Float(2.71)) == Float(2.71),
+                "Select by magnitude"
+            )
         }
     }
 }
@@ -246,8 +321,14 @@ extension IEEE_754.MinMax.Test {
     @Suite("IEEE_754.MinMax - Float maximumMagnitude")
     struct FloatMaximumMagnitude {
         @Test func `by Absolute Value`() {
-            #expect(IEEE_754.MinMax.maximumMagnitude(Float(3.14), Float(-2.71)) == Float(3.14), "Select by magnitude")
-            #expect(IEEE_754.MinMax.maximumMagnitude(Float(-3.14), Float(2.71)) == Float(-3.14), "Select by magnitude")
+            #expect(
+                IEEE_754.MinMax.maximumMagnitude(Float(3.14), Float(-2.71)) == Float(3.14),
+                "Select by magnitude"
+            )
+            #expect(
+                IEEE_754.MinMax.maximumMagnitude(Float(-3.14), Float(2.71)) == Float(-3.14),
+                "Select by magnitude"
+            )
         }
     }
 }
@@ -283,25 +364,67 @@ extension IEEE_754.MinMax.Test {
 
         @Test
         func `apply with Operation enum - magnitude(.minimum, preferNumber: false)`() {
-            #expect(IEEE_754.MinMax.apply(3.14, -2.71, operation: .magnitude(.minimum, preferNumber: false)) == -2.71)
-            #expect(IEEE_754.MinMax.apply(Double.nan, 3.14, operation: .magnitude(.minimum, preferNumber: false)).isNaN)
+            #expect(
+                IEEE_754.MinMax.apply(
+                    3.14,
+                    -2.71,
+                    operation: .magnitude(.minimum, preferNumber: false)
+                ) == -2.71
+            )
+            #expect(
+                IEEE_754.MinMax.apply(
+                    Double.nan,
+                    3.14,
+                    operation: .magnitude(.minimum, preferNumber: false)
+                ).isNaN
+            )
         }
 
         @Test
         func `apply with Operation enum - magnitude(.maximum, preferNumber: false)`() {
-            #expect(IEEE_754.MinMax.apply(3.14, -2.71, operation: .magnitude(.maximum, preferNumber: false)) == 3.14)
+            #expect(
+                IEEE_754.MinMax.apply(
+                    3.14,
+                    -2.71,
+                    operation: .magnitude(.maximum, preferNumber: false)
+                ) == 3.14
+            )
         }
 
         @Test
         func `apply with Operation enum - magnitude(.minimum, preferNumber: true)`() {
-            #expect(IEEE_754.MinMax.apply(3.14, -2.71, operation: .magnitude(.minimum, preferNumber: true)) == -2.71)
-            #expect(IEEE_754.MinMax.apply(Double.nan, 3.14, operation: .magnitude(.minimum, preferNumber: true)) == 3.14)
+            #expect(
+                IEEE_754.MinMax.apply(
+                    3.14,
+                    -2.71,
+                    operation: .magnitude(.minimum, preferNumber: true)
+                ) == -2.71
+            )
+            #expect(
+                IEEE_754.MinMax.apply(
+                    Double.nan,
+                    3.14,
+                    operation: .magnitude(.minimum, preferNumber: true)
+                ) == 3.14
+            )
         }
 
         @Test
         func `apply with Operation enum - magnitude(.maximum, preferNumber: true)`() {
-            #expect(IEEE_754.MinMax.apply(3.14, -2.71, operation: .magnitude(.maximum, preferNumber: true)) == 3.14)
-            #expect(IEEE_754.MinMax.apply(Double.nan, 3.14, operation: .magnitude(.maximum, preferNumber: true)) == 3.14)
+            #expect(
+                IEEE_754.MinMax.apply(
+                    3.14,
+                    -2.71,
+                    operation: .magnitude(.maximum, preferNumber: true)
+                ) == 3.14
+            )
+            #expect(
+                IEEE_754.MinMax.apply(
+                    Double.nan,
+                    3.14,
+                    operation: .magnitude(.maximum, preferNumber: true)
+                ) == 3.14
+            )
         }
 
         @Test
@@ -324,6 +447,7 @@ extension IEEE_754.MinMax.Test {
                 switch operation {
                 case .standard(.minimum), .number(.minimum), .magnitude(.minimum, _):
                     #expect(result <= 3.14)
+
                 case .standard(.maximum), .number(.maximum), .magnitude(.maximum, _):
                     #expect(result >= 2.71)
                 }

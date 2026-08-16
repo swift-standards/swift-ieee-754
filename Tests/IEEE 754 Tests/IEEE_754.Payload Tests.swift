@@ -25,9 +25,15 @@ extension IEEE_754.Payload {
         }
 
         @Test func `extract From Non NaN`() {
-            #expect(IEEE_754.Payload.extract(from: 3.14) == nil, "Should return nil for normal value")
+            #expect(
+                IEEE_754.Payload.extract(from: 3.14) == nil,
+                "Should return nil for normal value"
+            )
             #expect(IEEE_754.Payload.extract(from: 0.0) == nil, "Should return nil for zero")
-            #expect(IEEE_754.Payload.extract(from: Double.infinity) == nil, "Should return nil for infinity")
+            #expect(
+                IEEE_754.Payload.extract(from: Double.infinity) == nil,
+                "Should return nil for infinity"
+            )
         }
 
         @Test func `payload In Range`() {
@@ -103,7 +109,10 @@ extension IEEE_754.Payload.Test {
         }
 
         @Test func `detect Signaling NaN`() {
-            #expect(!IEEE_754.Payload.isQuietNaN(Double.signalingNaN), "Should not detect signaling NaN as quiet")
+            #expect(
+                !IEEE_754.Payload.isQuietNaN(Double.signalingNaN),
+                "Should not detect signaling NaN as quiet"
+            )
         }
 
         @Test func `non NaN Values`() {
@@ -118,17 +127,26 @@ extension IEEE_754.Payload.Test {
     @Suite("IEEE_754.Payload - Double isSignalingNaN")
     struct DoubleIsSignalingNaN {
         @Test func `detect Signaling NaN`() {
-            #expect(IEEE_754.Payload.isSignalingNaN(Double.signalingNaN), "Should detect signaling NaN")
+            #expect(
+                IEEE_754.Payload.isSignalingNaN(Double.signalingNaN),
+                "Should detect signaling NaN"
+            )
         }
 
         @Test func `detect Quiet NaN`() {
-            #expect(!IEEE_754.Payload.isSignalingNaN(Double.nan), "Should not detect quiet NaN as signaling")
+            #expect(
+                !IEEE_754.Payload.isSignalingNaN(Double.nan),
+                "Should not detect quiet NaN as signaling"
+            )
         }
 
         @Test func `non NaN Values`() {
             #expect(!IEEE_754.Payload.isSignalingNaN(3.14), "Normal value is not signaling NaN")
             #expect(!IEEE_754.Payload.isSignalingNaN(0.0), "Zero is not signaling NaN")
-            #expect(!IEEE_754.Payload.isSignalingNaN(Double.infinity), "Infinity is not signaling NaN")
+            #expect(
+                !IEEE_754.Payload.isSignalingNaN(Double.infinity),
+                "Infinity is not signaling NaN"
+            )
         }
     }
 }
@@ -151,9 +169,15 @@ extension IEEE_754.Payload.Test {
         }
 
         @Test func `extract From Non NaN`() {
-            #expect(IEEE_754.Payload.extract(from: Float(3.14)) == nil, "Should return nil for normal value")
+            #expect(
+                IEEE_754.Payload.extract(from: Float(3.14)) == nil,
+                "Should return nil for normal value"
+            )
             #expect(IEEE_754.Payload.extract(from: Float(0.0)) == nil, "Should return nil for zero")
-            #expect(IEEE_754.Payload.extract(from: Float.infinity) == nil, "Should return nil for infinity")
+            #expect(
+                IEEE_754.Payload.extract(from: Float.infinity) == nil,
+                "Should return nil for infinity"
+            )
         }
 
         @Test func `payload In Range`() {
@@ -210,7 +234,10 @@ extension IEEE_754.Payload.Test {
         }
 
         @Test func `detect Signaling NaN`() {
-            #expect(!IEEE_754.Payload.isQuietNaN(Float.signalingNaN), "Should not detect signaling NaN as quiet")
+            #expect(
+                !IEEE_754.Payload.isQuietNaN(Float.signalingNaN),
+                "Should not detect signaling NaN as quiet"
+            )
         }
 
         @Test func `non NaN Values`() {
@@ -223,15 +250,24 @@ extension IEEE_754.Payload.Test {
     @Suite("IEEE_754.Payload - Float isSignalingNaN")
     struct FloatIsSignalingNaN {
         @Test func `detect Signaling NaN`() {
-            #expect(IEEE_754.Payload.isSignalingNaN(Float.signalingNaN), "Should detect signaling NaN")
+            #expect(
+                IEEE_754.Payload.isSignalingNaN(Float.signalingNaN),
+                "Should detect signaling NaN"
+            )
         }
 
         @Test func `detect Quiet NaN`() {
-            #expect(!IEEE_754.Payload.isSignalingNaN(Float.nan), "Should not detect quiet NaN as signaling")
+            #expect(
+                !IEEE_754.Payload.isSignalingNaN(Float.nan),
+                "Should not detect quiet NaN as signaling"
+            )
         }
 
         @Test func `non NaN Values`() {
-            #expect(!IEEE_754.Payload.isSignalingNaN(Float(3.14)), "Normal value is not signaling NaN")
+            #expect(
+                !IEEE_754.Payload.isSignalingNaN(Float(3.14)),
+                "Normal value is not signaling NaN"
+            )
         }
     }
 }

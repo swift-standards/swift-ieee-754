@@ -31,7 +31,9 @@ extension IEEE_754.Arithmetic {
         @Test func `Infinity Addition`() {
             #expect(IEEE_754.Arithmetic.addition(Double.infinity, 5.0) == Double.infinity)
             #expect(IEEE_754.Arithmetic.addition(-Double.infinity, 5.0) == -Double.infinity)
-            #expect(IEEE_754.Arithmetic.addition(Double.infinity, Double.infinity) == Double.infinity)
+            #expect(
+                IEEE_754.Arithmetic.addition(Double.infinity, Double.infinity) == Double.infinity
+            )
         }
 
         @Test func `Nan Addition`() {
@@ -246,7 +248,11 @@ extension IEEE_754.Arithmetic.Test {
         }
 
         @Test func `Float FMA`() {
-            let result = IEEE_754.Arithmetic.fusedMultiplyAdd(a: Float(2.0), b: Float(3.0), c: Float(1.0))
+            let result = IEEE_754.Arithmetic.fusedMultiplyAdd(
+                a: Float(2.0),
+                b: Float(3.0),
+                c: Float(1.0)
+            )
             #expect(result == 7.0)
         }
     }
