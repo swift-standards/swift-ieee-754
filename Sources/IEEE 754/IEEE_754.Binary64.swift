@@ -255,7 +255,7 @@ extension IEEE_754.Binary64 {
         guard bytes.count == byteSize else { return nil }
 
         let bitPattern: UInt64 = bytes.withUnsafeBytes { buffer in
-            let loaded = buffer.loadUnaligned(fromByteOffset: 0, as: UInt64.self)
+            let loaded = unsafe buffer.loadUnaligned(fromByteOffset: 0, as: UInt64.self)
             switch endianness {
             case .little:
                 return UInt64(littleEndian: loaded)
