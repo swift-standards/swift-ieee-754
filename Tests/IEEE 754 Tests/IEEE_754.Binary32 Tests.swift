@@ -1,8 +1,3 @@
-// IEEE_754.Binary32 Tests.swift
-// swift-ieee-754
-//
-// Tests for IEEE 754 Binary32 (authoritative implementation)
-
 import Testing
 
 @testable import IEEE_754
@@ -131,7 +126,6 @@ extension IEEE_754.Binary32.Test {
             #expect(fromLittle == value, "Little endian round-trip should work")
             #expect(fromBig == value, "Big endian round-trip should work")
 
-            // Mismatched endianness should fail
             let wrongLittle = IEEE_754.Binary32.value(from: bigBytes, endianness: .little)
             let wrongBig = IEEE_754.Binary32.value(from: littleBytes, endianness: .big)
 

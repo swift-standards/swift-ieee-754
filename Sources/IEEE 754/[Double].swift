@@ -1,36 +1,7 @@
-// [Double].swift
-// swift-ieee-754
-//
-// Array extensions for Swift standard library Double (IEEE 754 binary64)
-
 public import Binary_Primitives
 
 extension [Double] {
-    /// Creates an array of Doubles from a flat byte collection
-    ///
-    /// Converts a collection of bytes in IEEE 754 binary64 format to an array
-    /// of Double values. Each Double requires exactly 8 bytes.
-    ///
-    /// - Parameters:
-    ///   - bytes: Collection of bytes representing multiple Doubles
-    ///   - endianness: Byte order of the input bytes (defaults to little-endian)
-    /// - Returns: Array of Doubles, or nil if byte count is not a multiple of 8
-    ///
-    /// Example:
-    /// ```swift
-    /// let bytes: [UInt8] = [
-    ///     0x6E, 0x86, 0x1B, 0xF0, 0xF9, 0x21, 0x09, 0x40,  // 3.14159
-    ///     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0x3F   // 1.0
-    /// ]
-    /// let doubles = [Double](bytes: bytes)
-    /// // [3.14159, 1.0]
-    /// ```
-    ///
-    /// Edge cases:
-    /// - Empty byte arrays return an empty array (vacuous truth semantics)
-    /// - Invalid byte counts (not divisible by 8) return `nil`
-    ///
-    /// - Note: Uses ``Double/init(bytes:endianness:)`` under the hood
+
     public init?<C: Collection>(bytes: C, endianness: Binary.Endianness = .little)
     where C.Element == UInt8 {
         let elementSize = MemoryLayout<Element>.size

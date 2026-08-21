@@ -1,13 +1,6 @@
-// IEEE_754.Payload Tests.swift
-// swift-ieee-754
-//
-// Comprehensive tests for IEEE 754-2019 Section 6.2 NaN Payload operations
-
 import Testing
 
 @testable import IEEE_754
-
-// MARK: - Double Payload Tests
 
 extension IEEE_754.Payload {
     @Suite("IEEE_754.Payload - Double extract")
@@ -39,7 +32,7 @@ extension IEEE_754.Payload {
         @Test func `payload In Range`() {
             let qnan = Double.nan
             if let payload = IEEE_754.Payload.extract(from: qnan) {
-                // Payload should fit within the significand bits
+
                 let maxPayload: UInt64 = 0x000F_FFFF_FFFF_FFFF
                 #expect(payload <= maxPayload, "Payload should be within valid range")
             }
@@ -63,7 +56,7 @@ extension IEEE_754.Payload.Test {
             #expect(!nan.isSignalingNaN, "Result should be quiet NaN")
 
             if let extracted = IEEE_754.Payload.extract(from: nan) {
-                // Note: Payload may be modified by quiet bit
+
                 #expect(extracted != 0, "Payload should be non-zero")
             }
         }
@@ -80,7 +73,7 @@ extension IEEE_754.Payload.Test {
     @Suite("IEEE_754.Payload - Double encodeSignalingNaN")
     struct DoubleEncodeSignalingNaN {
         @Test func `encode Zero Payload`() {
-            // Zero payload should be converted to 1 for signaling NaN
+
             let nan: Double = IEEE_754.Payload.encodeSignalingNaN(payload: 0)
             #expect(nan.isNaN, "Result should be NaN")
             #expect(nan.isSignalingNaN, "Result should be signaling NaN")
@@ -150,8 +143,6 @@ extension IEEE_754.Payload.Test {
         }
     }
 }
-
-// MARK: - Float Payload Tests
 
 extension IEEE_754.Payload.Test {
     @Suite("IEEE_754.Payload - Float extract")
@@ -272,8 +263,6 @@ extension IEEE_754.Payload.Test {
     }
 }
 
-// MARK: - Payload Preservation Tests
-
 extension IEEE_754.Payload.Test {
     @Suite("IEEE_754.Payload - Payload Preservation")
     struct PayloadPreservation {
@@ -281,7 +270,7 @@ extension IEEE_754.Payload.Test {
             let payload: UInt64 = 0x123456
             let nan = IEEE_754.Payload.encodeQuietNaN(payload: payload)
             if let extracted = IEEE_754.Payload.extract(from: nan) {
-                // Payload should be preserved (modulo quiet bit)
+
                 #expect(extracted != 0, "Payload should be non-zero")
             }
         }
@@ -290,7 +279,7 @@ extension IEEE_754.Payload.Test {
             let payload: UInt64 = 0x123456
             let nan = IEEE_754.Payload.encodeSignalingNaN(payload: payload)
             if let extracted = IEEE_754.Payload.extract(from: nan) {
-                // Payload should be preserved (modulo signaling bit)
+
                 #expect(extracted != 0, "Payload should be non-zero")
             }
         }

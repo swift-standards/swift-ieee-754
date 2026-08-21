@@ -1,13 +1,6 @@
-// Swift API Wrappers Tests.swift
-// swift-ieee-754
-//
-// Tests for elegant Swift wrappers around IEEE 754 Shims functionality
-
 import Testing
 
 @testable import IEEE_754
-
-// MARK: - Rounding Control Tests
 
 #if IEEE_754_SHIMS
     extension IEEE_754.RoundingControl {
@@ -15,18 +8,18 @@ import Testing
         struct Test {
             @Test func `get Rounding Mode`() {
                 let mode = IEEE_754.RoundingControl.get()
-                // Should be one of the four valid modes
+
                 switch mode {
                 case .toNearest, .downward, .upward, .towardZero:
-                    break  // Valid
+                    break
                 }
             }
 
             @Test func `set Rounding Mode`() throws {
-                // Save original mode
+
                 let originalMode = IEEE_754.RoundingControl.get()
                 defer {
-                    // Always restore original mode, even if test fails
+
                     try? IEEE_754.RoundingControl.set(originalMode)
                 }
 
@@ -36,14 +29,13 @@ import Testing
             }
 
             @Test func `with Mode Scoping`() throws {
-                // Save original mode
+
                 let originalMode = IEEE_754.RoundingControl.get()
                 defer {
-                    // Always restore original mode, even if test fails
+
                     try? IEEE_754.RoundingControl.set(originalMode)
                 }
 
-                // Set a specific mode first
                 try IEEE_754.RoundingControl.set(.toNearest)
 
                 let result = try IEEE_754.RoundingControl.withMode(.towardZero) {
@@ -52,7 +44,6 @@ import Testing
                     return 10.0 / 3.0
                 }
 
-                // Mode should be restored
                 let restoredMode = IEEE_754.RoundingControl.get()
                 #expect(restoredMode == .toNearest)
                 #expect(result > 0)
@@ -60,19 +51,6 @@ import Testing
         }
     }
 #endif
-
-// MARK: - Exception Handling Tests
-//
-// F-004 follow-up: `.serialized` on a suite only serializes that suite's OWN
-// subtree — it does not provide mutual exclusion against other, unrelated
-// top-level suites. These three suites all read/write `IEEE_754.Exceptions`'
-// single shared process-global store (see its "Store Model" documentation),
-// which the F-004 fix made the sole target of both manual `raise` calls AND
-// (via the Comparison.Signaling bridge) NaN-triggered signaling comparisons —
-// widening how many call sites now write that shared store concurrently.
-// They are nested here, under the already-`.serialized` `IEEE_754.Exceptions.Test`
-// (whose `.serialized` trait propagates to its whole subtree), specifically
-// to close that cross-suite race rather than merely reducing it.
 
 extension IEEE_754.Exceptions.Test {
     @Suite("Swift API - Exception Handling")
@@ -97,12 +75,10 @@ extension IEEE_754.Exceptions.Test {
         @Test func `fpu Exception Detection`() {
             Float.exception.clear()
 
-            // Perform operation that might set FPU exceptions
-            _ = 1.0 / 3.0  // May set inexact
+            _ = 1.0 / 3.0
 
             let fpuState = Float.exception.test()
 
-            // Verify structure is readable
             #expect(fpuState.invalid == false || fpuState.invalid == true)
             #expect(fpuState.division == false || fpuState.division == true)
         }
@@ -116,14 +92,6 @@ extension IEEE_754.Exceptions.Test {
         }
     }
 }
-
-// MARK: - Signaling Comparison Tests
-//
-// Nested under `IEEE_754.Exceptions.Test` (see note above) rather than under
-// `IEEE_754.Comparison.Signaling` — a deliberate deviation from the usual
-// "extension of the affected source type" placement, made specifically to
-// close the cross-suite race on the shared `IEEE_754.Exceptions` store that
-// signaling comparisons write into as of the F-004 fix.
 
 #if IEEE_754_SHIMS
     extension IEEE_754.Exceptions.Test {
@@ -172,17 +140,12 @@ extension IEEE_754.Exceptions.Test {
                 IEEE_754.Exceptions.clear()
 
                 let result = IEEE_754.Comparison.Signaling.notEqual(Double.nan, 3.14)
-                #expect(result == true)  // NaN is not equal to anything
+                #expect(result == true)
                 #expect(IEEE_754.Exceptions.invalidOperation)
             }
         }
     }
 #endif
-
-// MARK: - Integration Tests
-//
-// Nested under `IEEE_754.Exceptions.Test` (see note above) for the same
-// cross-suite-race reason.
 
 extension IEEE_754.Exceptions.Test {
     @Suite("Swift API - Integration Scenarios")
@@ -195,12 +158,9 @@ extension IEEE_754.Exceptions.Test {
                     let result = 1.0 / 3.0
                     #expect(result > 0)
 
-                    // Mode should be upward within closure
                     #expect(IEEE_754.RoundingControl.get() == .upward)
                 }
 
-                // Mode should be restored
-                // Exceptions should still be clear
                 #expect(!IEEE_754.Exceptions.invalidOperation)
             }
         #endif
@@ -209,13 +169,10 @@ extension IEEE_754.Exceptions.Test {
             @Test func `signaling Comparison Sets Exception`() {
                 IEEE_754.Exceptions.clear()
 
-                // This should set the invalid exception
                 _ = IEEE_754.Comparison.Signaling.equal(Float.nan, Float.nan)
 
-                // Verify exception was set
                 #expect(IEEE_754.Exceptions.invalidOperation)
 
-                // Clear for next test
                 IEEE_754.Exceptions.clear()
             }
         #endif
@@ -224,15 +181,12 @@ extension IEEE_754.Exceptions.Test {
             IEEE_754.Exceptions.clear()
             Float.exception.clear()
 
-            // Raise thread-local exception
             IEEE_754.Exceptions.raise(.overflow)
 
-            // Check thread-local
             #expect(IEEE_754.Exceptions.overflow)
 
-            // FPU state is independent
             let fpuState = Float.exception.test()
-            // FPU overflow might or might not be set depending on operations
+
             #expect(fpuState.overflow == false || fpuState.overflow == true)
         }
     }

@@ -1,13 +1,6 @@
-// IEEE_754.Exceptions Tests.swift
-// swift-ieee-754
-//
-// Comprehensive tests for IEEE 754-2019 Section 7 Exception Handling
-
 import Testing
 
 @testable import IEEE_754
-
-// MARK: - Exception Flag Tests
 
 extension IEEE_754.Exceptions {
     @Suite("IEEE_754.Exceptions - Flag Operations", .serialized)
@@ -143,8 +136,6 @@ extension IEEE_754.Exceptions {
     }
 }
 
-// MARK: - Compatibility API Tests
-
 extension IEEE_754.Exceptions.Test {
     @Suite("IEEE_754.Exceptions - Compatibility Properties", .serialized)
     struct Compatibility {
@@ -185,8 +176,6 @@ extension IEEE_754.Exceptions.Test {
     }
 }
 
-// MARK: - Flag Enum Tests
-
 extension IEEE_754.Exceptions.Test {
     @Suite("IEEE_754.Exceptions - Flag Enum")
     struct FlagEnum {
@@ -218,8 +207,6 @@ extension IEEE_754.Exceptions.Test {
     }
 }
 
-// MARK: - Idempotency Tests
-
 extension IEEE_754.Exceptions.Test {
     @Suite("IEEE_754.Exceptions - Idempotency", .serialized)
     struct Idempotency {
@@ -250,8 +237,6 @@ extension IEEE_754.Exceptions.Test {
         }
     }
 }
-
-// MARK: - Independence Tests
 
 extension IEEE_754.Exceptions.Test {
     @Suite("IEEE_754.Exceptions - Flag Independence", .serialized)
@@ -289,8 +274,6 @@ extension IEEE_754.Exceptions.Test {
     }
 }
 
-// MARK: - Thread Safety Tests
-
 extension IEEE_754.Exceptions.Test {
     @Suite("IEEE_754.Exceptions - Thread Independence", .serialized)
     struct Thread {
@@ -316,25 +299,12 @@ extension IEEE_754.Exceptions.Test {
                 }
             }
 
-            // Outside an explicit test scope, `state` resolves to the single
-            // process-global instance for every thread and task alike — a
-            // flag raised inside a sibling child task must be visible here.
             #expect(IEEE_754.Exceptions.test(.divisionByZero))
 
             IEEE_754.Exceptions.clear()
         }
     }
 }
-
-// MARK: - Single-Store Discipline Tests (F-004)
-//
-// `raise`/`test`/`clear` must operate on exactly one store — the Swift
-// Mutex-protected `ExceptionState` — and must not read from or write to the
-// separate, opt-in C-shim thread-local store (`ieee754_raise_exception` /
-// `ieee754_test_exception` / `ieee754_clear_exception`). Before the fix,
-// `raise`/`test`/`clear` silently mirrored into that C thread-local store
-// too, so a flag set through one path leaked into (or was masked by) the
-// other. These tests fail against the pre-fix source and pass post-fix.
 
 #if IEEE_754_SHIMS
     import IEEE_754_Shims

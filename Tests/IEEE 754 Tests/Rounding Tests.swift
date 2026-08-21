@@ -1,8 +1,3 @@
-// Rounding Tests.swift
-// swift-ieee-754
-//
-// Tests for IEEE 754-2019 Section 5.9-5.10: Round to Integral Operations
-
 import Testing
 
 @testable import IEEE_754
@@ -11,8 +6,6 @@ extension IEEE_754.Rounding {
     @Suite("IEEE 754 Rounding Operations")
     struct Test {}
 }
-
-// MARK: - Double Floor Tests
 
 extension IEEE_754.Rounding.Test {
     @Test(
@@ -43,8 +36,6 @@ extension IEEE_754.Rounding.Test {
     }
 }
 
-// MARK: - Double Ceil Tests
-
 extension IEEE_754.Rounding.Test {
     @Test(
         arguments: [
@@ -74,23 +65,21 @@ extension IEEE_754.Rounding.Test {
     }
 }
 
-// MARK: - Double Round Tests
-
 extension IEEE_754.Rounding.Test {
     @Test(
         arguments: [
             (3.4, 3.0),
-            (3.5, 4.0),  // Ties to even: 4 is even
+            (3.5, 4.0),
             (3.6, 4.0),
-            (4.5, 4.0),  // Ties to even: 4 is even
-            (5.5, 6.0),  // Ties to even: 6 is even
+            (4.5, 4.0),
+            (5.5, 6.0),
             (-3.4, -3.0),
-            (-3.5, -4.0),  // Ties to even: -4 is even
+            (-3.5, -4.0),
             (-3.6, -4.0),
-            (-4.5, -4.0),  // Ties to even: -4 is even
-            (-5.5, -6.0),  // Ties to even: -6 is even
-            (0.5, 0.0),  // Ties to even: 0 is even
-            (-0.5, -0.0),  // Ties to even: 0 is even
+            (-4.5, -4.0),
+            (-5.5, -6.0),
+            (0.5, 0.0),
+            (-0.5, -0.0),
         ])
     func `round rounds to nearest (ties to even)`(value: Double, expected: Double) {
         #expect(IEEE_754.Rounding.round(value) == expected)
@@ -106,8 +95,6 @@ extension IEEE_754.Rounding.Test {
         #expect(IEEE_754.Rounding.round(-0.0) == -0.0)
     }
 }
-
-// MARK: - Double Trunc Tests
 
 extension IEEE_754.Rounding.Test {
     @Test(
@@ -138,8 +125,6 @@ extension IEEE_754.Rounding.Test {
     }
 }
 
-// MARK: - Float Floor Tests
-
 extension IEEE_754.Rounding.Test {
     @Test(
         arguments: [
@@ -162,8 +147,6 @@ extension IEEE_754.Rounding.Test {
     }
 }
 
-// MARK: - Float Ceil Tests
-
 extension IEEE_754.Rounding.Test {
     @Test(
         arguments: [
@@ -185,8 +168,6 @@ extension IEEE_754.Rounding.Test {
         #expect(IEEE_754.Rounding.ceil(Float.nan).isNaN)
     }
 }
-
-// MARK: - Float Round Tests
 
 extension IEEE_754.Rounding.Test {
     @Test(
@@ -211,8 +192,6 @@ extension IEEE_754.Rounding.Test {
     }
 }
 
-// MARK: - Float Trunc Tests
-
 extension IEEE_754.Rounding.Test {
     @Test(
         arguments: [
@@ -235,25 +214,23 @@ extension IEEE_754.Rounding.Test {
     }
 }
 
-// MARK: - Double RoundAwayFromZero Tests
-
 extension IEEE_754.Rounding.Test {
     @Test(
         arguments: [
             (3.4, 3.0),
-            (3.5, 4.0),  // Ties away from zero: 3.5 → 4.0
+            (3.5, 4.0),
             (3.6, 4.0),
-            (4.5, 5.0),  // Ties away from zero: 4.5 → 5.0
-            (5.5, 6.0),  // Ties away from zero: 5.5 → 6.0
+            (4.5, 5.0),
+            (5.5, 6.0),
             (-3.4, -3.0),
-            (-3.5, -4.0),  // Ties away from zero: -3.5 → -4.0
+            (-3.5, -4.0),
             (-3.6, -4.0),
-            (-4.5, -5.0),  // Ties away from zero: -4.5 → -5.0
-            (-5.5, -6.0),  // Ties away from zero: -5.5 → -6.0
-            (0.5, 1.0),  // Ties away from zero: 0.5 → 1.0
-            (-0.5, -1.0),  // Ties away from zero: -0.5 → -1.0
-            (2.5, 3.0),  // Ties away from zero: 2.5 → 3.0
-            (1.5, 2.0),  // Ties away from zero: 1.5 → 2.0
+            (-4.5, -5.0),
+            (-5.5, -6.0),
+            (0.5, 1.0),
+            (-0.5, -1.0),
+            (2.5, 3.0),
+            (1.5, 2.0),
         ])
     func `roundAwayFromZero rounds to nearest (ties away from zero)`(
         value: Double,
@@ -274,17 +251,15 @@ extension IEEE_754.Rounding.Test {
 
     @Test
     func `roundAwayFromZero differs from round on ties`() {
-        // These demonstrate the difference between ties-to-even and ties-away-from-zero
+
         let tieValues = [0.5, 1.5, 2.5, 3.5, 4.5, -0.5, -1.5, -2.5, -3.5, -4.5]
         for value in tieValues {
             let awayResult = IEEE_754.Rounding.roundAwayFromZero(value)
             let evenResult = IEEE_754.Rounding.round(value)
 
-            // Both should be integral
             #expect(awayResult.truncatingRemainder(dividingBy: 1.0) == 0.0)
             #expect(evenResult.truncatingRemainder(dividingBy: 1.0) == 0.0)
 
-            // For ties away from zero, the result is always away from zero
             if value > 0 {
                 #expect(awayResult >= value, "Positive tie should round up")
             } else if value < 0 {
@@ -294,18 +269,16 @@ extension IEEE_754.Rounding.Test {
     }
 }
 
-// MARK: - Float RoundAwayFromZero Tests
-
 extension IEEE_754.Rounding.Test {
     @Test(
         arguments: [
             (Float(3.4), Float(3.0)),
-            (Float(3.5), Float(4.0)),  // Ties away from zero
+            (Float(3.5), Float(4.0)),
             (Float(3.6), Float(4.0)),
-            (Float(4.5), Float(5.0)),  // Ties away from zero
-            (Float(-3.5), Float(-4.0)),  // Ties away from zero
-            (Float(0.5), Float(1.0)),  // Ties away from zero
-            (Float(-0.5), Float(-1.0)),  // Ties away from zero
+            (Float(4.5), Float(5.0)),
+            (Float(-3.5), Float(-4.0)),
+            (Float(0.5), Float(1.0)),
+            (Float(-0.5), Float(-1.0)),
         ])
     func `float roundAwayFromZero rounds to nearest (ties away from zero)`(
         value: Float,
@@ -322,8 +295,6 @@ extension IEEE_754.Rounding.Test {
         #expect(IEEE_754.Rounding.roundAwayFromZero(Float.nan).isNaN)
     }
 }
-
-// MARK: - Edge Cases
 
 extension IEEE_754.Rounding.Test {
     @Test
@@ -361,8 +332,6 @@ extension IEEE_754.Rounding.Test {
         #expect(IEEE_754.Rounding.trunc(max) == max)
     }
 }
-
-// MARK: - IEEE 754 Conformance
 
 extension IEEE_754.Rounding.Test {
     @Test
@@ -405,8 +374,6 @@ extension IEEE_754.Rounding.Test {
         #expect(negativeZero.sign == .minus)
     }
 }
-
-// MARK: - Hierarchical Direction API Tests
 
 extension IEEE_754.Rounding.Test {
     @Test

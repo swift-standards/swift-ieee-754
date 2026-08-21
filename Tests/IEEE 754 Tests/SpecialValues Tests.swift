@@ -1,8 +1,3 @@
-// SpecialValues Tests.swift
-// swift-ieee-754
-//
-// Tests for IEEE 754 special values
-
 import Testing
 
 @testable import IEEE_754
@@ -17,7 +12,6 @@ extension Double.Test {
 
             #expect(restored == value, "\(value) should round-trip")
 
-            // Check sign bit preservation
             if value.sign == .minus {
                 #expect(restored?.sign == .minus, "Negative zero should preserve sign bit")
             } else {
@@ -84,7 +78,6 @@ extension Float.Test {
 
             #expect(restored == value, "\(value) should round-trip")
 
-            // Check sign bit preservation
             if value.sign == .minus {
                 #expect(restored?.sign == .minus, "Negative zero should preserve sign bit")
             } else {

@@ -1,8 +1,3 @@
-// Float+IEEE_754 Tests.swift
-// swift-ieee-754
-//
-// Tests for Float IEEE 754 extensions
-
 import Testing
 
 @testable import IEEE_754
@@ -26,7 +21,7 @@ extension Float {
             if value.isNaN {
                 #expect(restored?.isNaN == true, "NaN should round-trip")
             } else if value == 0 && value.sign == .minus {
-                // Negative zero
+
                 #expect(
                     restored == value && restored!.sign == .minus,
                     "Negative zero should preserve sign"

@@ -1,12 +1,3 @@
-// tls_exceptions.c
-// IEEE 754 Shims
-//
-// IEEE 754-2019 Section 7: Thread-Local Exception Flags
-
-// The IEEE 754 Shims FPU shim is POSIX/Darwin-only (fenv.h, pthreads). It is not a
-// dependency of the "IEEE 754" target on Windows (see Package.swift + the
-// IEEE_754_SHIMS define), so compile this translation unit empty there rather
-// than fail on the unavailable <pthread.h>/<fenv.h> surface.
 #if !defined(_WIN32)
 
 #include "include/ieee754_fpu.h"
@@ -14,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Thread-local exception state
 typedef struct {
     uint8_t invalid;
     uint8_t divByZero;
@@ -23,21 +13,17 @@ typedef struct {
     uint8_t inexact;
 } ThreadExceptionState;
 
-// pthread key for thread-local storage
 static pthread_key_t exception_key;
 static pthread_once_t key_once = PTHREAD_ONCE_INIT;
 
-// Cleanup function for thread exit
 static void cleanup_thread_exceptions(void* state) {
     free(state);
 }
 
-// Initialize the pthread key (called once)
 static void make_exception_key(void) {
     pthread_key_create(&exception_key, cleanup_thread_exceptions);
 }
 
-// Get or create thread-local exception state
 static ThreadExceptionState* get_thread_state(void) {
     pthread_once(&key_once, make_exception_key);
 
@@ -131,4 +117,4 @@ void ieee754_clear_all_exceptions(void) {
     memset(state, 0, sizeof(ThreadExceptionState));
 }
 
-#endif  // !defined(_WIN32)
+#endif

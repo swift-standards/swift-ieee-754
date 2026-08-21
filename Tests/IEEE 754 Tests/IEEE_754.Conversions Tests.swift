@@ -1,13 +1,6 @@
-// IEEE_754.Conversions Tests.swift
-// swift-ieee-754
-//
-// Comprehensive tests for IEEE 754-2019 Section 5.4 Conversion operations
-
 import Testing
 
 @testable import IEEE_754
-
-// MARK: - Format Conversions
 
 extension IEEE_754.Conversions {
     @Suite("IEEE_754.Conversions - Float to Double")
@@ -52,14 +45,14 @@ extension IEEE_754.Conversions.Test {
         }
 
         @Test func overflow() {
-            let huge = 1e308  // Much larger than Float max
+            let huge = 1e308
             let result = IEEE_754.Conversions.doubleToFloat(huge)
             #expect(result.isInfinite, "Overflow should produce infinity")
             #expect(result.sign == .plus, "Sign should be preserved")
         }
 
         @Test func underflow() {
-            let tiny = 1e-50  // Much smaller than Float min
+            let tiny = 1e-50
             let result = IEEE_754.Conversions.doubleToFloat(tiny)
             #expect(
                 result == 0.0 || result.isSubnormal,
@@ -74,8 +67,8 @@ extension IEEE_754.Conversions.Test {
         }
 
         @Test func rounding() {
-            // Value that requires rounding when converting to Float
-            let value = 1.00000000000000001  // More precision than Float can hold
+
+            let value = 1.00000000000000001
             let result = IEEE_754.Conversions.doubleToFloat(value)
             #expect(result == Float(value), "Should round appropriately")
         }
@@ -86,8 +79,6 @@ extension IEEE_754.Conversions.Test {
         }
     }
 }
-
-// MARK: - Integer Conversions
 
 extension IEEE_754.Conversions.Test {
     @Suite("IEEE_754.Conversions - Double to Int")
@@ -132,20 +123,11 @@ extension IEEE_754.Conversions.Test {
     }
 }
 
-// MARK: - Double to Int Boundary Regression (F-001)
-//
-// `Int.max` (2^63 - 1) is not exactly representable as `Double`;
-// `Double(Int.max)` rounds up to 2^63. A range guard of the shape
-// `value > Double(Int.max)` therefore lets `value == 2^63` itself through,
-// and converting that value to `Int` traps instead of returning nil as
-// documented. These pin the exact boundary (2^63), `nextDown(2^63)`, and the
-// (already-exact) negative boundary at `Int.min`.
-
 extension IEEE_754.Conversions.Test.DoubleToInt {
     @Suite
     struct `Edge Case` {
         @Test func `Value Exactly Two To The Sixty Three Returns Nil Not Trap`() {
-            let twoToTheSixtyThree = 9_223_372_036_854_775_808.0  // 2^63, one past Int.max
+            let twoToTheSixtyThree = 9_223_372_036_854_775_808.0
             #expect(IEEE_754.Conversions.doubleToInt(twoToTheSixtyThree) == nil)
         }
 
@@ -155,17 +137,12 @@ extension IEEE_754.Conversions.Test.DoubleToInt {
         }
 
         @Test func `Negative Boundary At Int Min Converts Exactly`() {
-            // Int.min (-2^63) IS exactly representable as Double, so this
-            // boundary already worked pre-fix; kept here as a paired sanity
-            // check alongside the positive-side boundary tests.
+
             #expect(IEEE_754.Conversions.doubleToInt(Double(Int.min)) == Int.min)
         }
 
         @Test func `Value Below Int Min Returns Nil`() {
-            // `Double(Int.min)` is exact (-2^63); near this magnitude the ULP
-            // is 2048, so an arbitrary small offset (e.g. -1024) can round
-            // back to -2^63 itself instead of a smaller value. `.nextDown`
-            // is the unambiguous next representable Double strictly below it.
+
             let belowMin = Double(Int.min).nextDown
             #expect(IEEE_754.Conversions.doubleToInt(belowMin) == nil)
         }
@@ -194,18 +171,11 @@ extension IEEE_754.Conversions.Test {
     }
 }
 
-// MARK: - Double to Int Truncating Boundary Regression (F-001)
-//
-// Mirrors the `DoubleToInt` boundary regression: `doubleToIntTruncating`
-// carried the same `value > Double(Int.max)` / `value < Double(Int.min)`
-// exclusive-bounds trap, letting the exact rounded boundary (2^63) through
-// to a trapping `Int(value)` instead of returning nil.
-
 extension IEEE_754.Conversions.Test.DoubleToIntTruncating {
     @Suite
     struct `Edge Case` {
         @Test func `Value Exactly Two To The Sixty Three Returns Nil Not Trap`() {
-            let twoToTheSixtyThree = 9_223_372_036_854_775_808.0  // 2^63, one past Int.max
+            let twoToTheSixtyThree = 9_223_372_036_854_775_808.0
             #expect(IEEE_754.Conversions.doubleToIntTruncating(twoToTheSixtyThree) == nil)
         }
 
@@ -264,18 +234,11 @@ extension IEEE_754.Conversions.Test {
     }
 }
 
-// MARK: - Float to Int Boundary Regression (F-001)
-//
-// Mirrors the `DoubleToInt` boundary regression: `Int.max` (2^63 - 1) is not
-// exactly representable as `Float` either; `Float(Int.max)` rounds up to
-// 2^63 (a power of two, exactly representable). A `value > Float(Int.max)`
-// guard let that exact boundary value through to a trapping `Int(rounded)`.
-
 extension IEEE_754.Conversions.Test.FloatToInt {
     @Suite
     struct `Edge Case` {
         @Test func `Value Exactly Two To The Sixty Three Returns Nil Not Trap`() {
-            let twoToTheSixtyThree = Float(9_223_372_036_854_775_808.0)  // 2^63
+            let twoToTheSixtyThree = Float(9_223_372_036_854_775_808.0)
             #expect(IEEE_754.Conversions.floatToInt(twoToTheSixtyThree) == nil)
         }
 
@@ -306,16 +269,11 @@ extension IEEE_754.Conversions.Test {
     }
 }
 
-// MARK: - Float to Int Truncating Boundary Regression (F-001)
-//
-// Mirrors the `FloatToInt` boundary regression above for the truncating
-// entry point, which carried the identical exclusive-bounds trap.
-
 extension IEEE_754.Conversions.Test.FloatToIntTruncating {
     @Suite
     struct `Edge Case` {
         @Test func `Value Exactly Two To The Sixty Three Returns Nil Not Trap`() {
-            let twoToTheSixtyThree = Float(9_223_372_036_854_775_808.0)  // 2^63
+            let twoToTheSixtyThree = Float(9_223_372_036_854_775_808.0)
             #expect(IEEE_754.Conversions.floatToIntTruncating(twoToTheSixtyThree) == nil)
         }
 
@@ -345,14 +303,12 @@ extension IEEE_754.Conversions.Test {
         }
 
         @Test func `Large Integers`() {
-            let large = 16_777_217  // 2^24 + 1, cannot be exactly represented in Float
+            let large = 16_777_217
             let result = IEEE_754.Conversions.intToFloat(large)
             #expect(result == Float(large), "Should match Swift's conversion (with rounding)")
         }
     }
 }
-
-// MARK: - Unsigned Integer Conversions
 
 extension IEEE_754.Conversions.Test {
     @Suite("IEEE_754.Conversions - Double to UInt")
@@ -375,18 +331,11 @@ extension IEEE_754.Conversions.Test {
     }
 }
 
-// MARK: - Double to UInt Boundary Regression (F-001)
-//
-// Mirrors the `DoubleToInt` boundary regression above: `UInt.max`
-// (2^64 - 1) is not exactly representable as `Double`, so `Double(UInt.max)`
-// rounds up to 2^64, and a `value > Double(UInt.max)` guard let that exact
-// boundary value through to a trapping conversion instead of nil.
-
 extension IEEE_754.Conversions.Test.DoubleToUInt {
     @Suite
     struct `Edge Case` {
         @Test func `Value Exactly Two To The Sixty Four Returns Nil Not Trap`() {
-            let twoToTheSixtyFour = 18_446_744_073_709_551_616.0  // 2^64, one past UInt.max
+            let twoToTheSixtyFour = 18_446_744_073_709_551_616.0
             #expect(IEEE_754.Conversions.doubleToUInt(twoToTheSixtyFour) == nil)
         }
 
@@ -429,18 +378,11 @@ extension IEEE_754.Conversions.Test {
     }
 }
 
-// MARK: - Float to UInt Boundary Regression (F-001)
-//
-// Mirrors the `DoubleToUInt` boundary regression: `UInt.max` (2^64 - 1) is
-// not exactly representable as `Float`; `Float(UInt.max)` rounds up to
-// 2^64. A `value > Float(UInt.max)` guard let that exact boundary value
-// through to a trapping `UInt(rounded)`.
-
 extension IEEE_754.Conversions.Test.FloatToUInt {
     @Suite
     struct `Edge Case` {
         @Test func `Value Exactly Two To The Sixty Four Returns Nil Not Trap`() {
-            let twoToTheSixtyFour = Float(18_446_744_073_709_551_616.0)  // 2^64
+            let twoToTheSixtyFour = Float(18_446_744_073_709_551_616.0)
             #expect(IEEE_754.Conversions.floatToUInt(twoToTheSixtyFour) == nil)
         }
 
@@ -461,8 +403,6 @@ extension IEEE_754.Conversions.Test {
         }
     }
 }
-
-// MARK: - Round-trip Tests
 
 extension IEEE_754.Conversions.Test {
     @Suite("IEEE_754.Conversions - Round-trip Tests")

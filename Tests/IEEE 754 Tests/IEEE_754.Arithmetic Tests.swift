@@ -1,13 +1,6 @@
-// IEEE_754.Arithmetic Tests.swift
-// swift-ieee-754
-//
-// Comprehensive tests for IEEE 754-2019 Section 5.4 Arithmetic Operations
-
 import Testing
 
 @testable import IEEE_754
-
-// MARK: - Basic Arithmetic Operations Tests
 
 extension IEEE_754.Arithmetic {
     @Suite("IEEE_754.Arithmetic - Addition")
@@ -165,15 +158,12 @@ extension IEEE_754.Arithmetic.Test {
         }
 
         @Test func `Fractional Remainder`() {
-            // IEEE 754 remainder: 7.5 / 2.0 → quotient rounds to 4 (nearest even)
-            // remainder = 7.5 - (4 × 2.0) = -0.5
+
             let result = IEEE_754.Arithmetic.remainder(7.5, 2.0)
             #expect(abs(result - (-0.5)) < 0.0001)
         }
     }
 }
-
-// MARK: - Special Operations Tests
 
 extension IEEE_754.Arithmetic.Test {
     @Suite("IEEE_754.Arithmetic - Square Root")
@@ -217,26 +207,25 @@ extension IEEE_754.Arithmetic.Test {
     @Suite("IEEE_754.Arithmetic - Fused Multiply-Add")
     struct FMA {
         @Test func `Basic FMA`() {
-            // (2 * 3) + 1 = 7
+
             let result = IEEE_754.Arithmetic.fusedMultiplyAdd(a: 2.0, b: 3.0, c: 1.0)
             #expect(result == 7.0)
         }
 
         @Test func `Zero FMA`() {
-            // (0 * 5) + 3 = 3
+
             let result = IEEE_754.Arithmetic.fusedMultiplyAdd(a: 0.0, b: 5.0, c: 3.0)
             #expect(result == 3.0)
         }
 
         @Test func `Negative FMA`() {
-            // (-2 * 3) + 10 = 4
+
             let result = IEEE_754.Arithmetic.fusedMultiplyAdd(a: -2.0, b: 3.0, c: 10.0)
             #expect(result == 4.0)
         }
 
         @Test func `Fma Accuracy`() {
-            // FMA should be more accurate than separate multiply and add
-            // Test case where intermediate overflow would occur
+
             let huge = Double.greatestFiniteMagnitude / 2.0
             let result = IEEE_754.Arithmetic.fusedMultiplyAdd(a: huge, b: 2.0, c: -huge)
             #expect(result.isFinite || result == huge)
@@ -257,8 +246,6 @@ extension IEEE_754.Arithmetic.Test {
         }
     }
 }
-
-// MARK: - Compound Operations Tests
 
 extension IEEE_754.Arithmetic.Test {
     @Suite("IEEE_754.Arithmetic - Absolute Value")
@@ -329,19 +316,15 @@ extension IEEE_754.Arithmetic.Test {
     }
 }
 
-// MARK: - Edge Cases Tests
-
 extension IEEE_754.Arithmetic.Test {
     @Suite("IEEE_754.Arithmetic - Edge Cases")
     struct EdgeCases {
         @Test func `Max Finite Operations`() {
             let max = Double.greatestFiniteMagnitude
 
-            // Addition overflow
             let sum = IEEE_754.Arithmetic.addition(max, max)
             #expect(sum == Double.infinity)
 
-            // Multiplication overflow
             let product = IEEE_754.Arithmetic.multiplication(max, 2.0)
             #expect(product == Double.infinity)
         }
@@ -349,11 +332,9 @@ extension IEEE_754.Arithmetic.Test {
         @Test func `Min Finite Operations`() {
             let min = Double.leastNormalMagnitude
 
-            // Division producing subnormal
             let quotient = IEEE_754.Arithmetic.division(min, 2.0)
             #expect(quotient < min)
 
-            // Multiplication producing subnormal
             let product = IEEE_754.Arithmetic.multiplication(min, 0.5)
             #expect(product < min)
         }
@@ -365,11 +346,11 @@ extension IEEE_754.Arithmetic.Test {
             #expect(sum > 0)
 
             let product = IEEE_754.Arithmetic.multiplication(subnormal, 0.5)
-            #expect(product >= 0)  // May underflow to 0
+            #expect(product >= 0)
         }
 
         @Test func `Mixed Sign Zeros`() {
-            // IEEE 754 signed zero behavior
+
             let posZero = 0.0
             let negZero = -0.0
 
@@ -378,8 +359,6 @@ extension IEEE_754.Arithmetic.Test {
         }
     }
 }
-
-// MARK: - Consistency Tests
 
 extension IEEE_754.Arithmetic.Test {
     @Suite("IEEE_754.Arithmetic - Consistency with Operators")

@@ -1,8 +1,3 @@
-// Endianness Tests.swift
-// swift-ieee-754
-//
-// Tests for little-endian and big-endian byte order handling
-
 import Testing
 
 @testable import IEEE_754
@@ -55,7 +50,6 @@ extension Double.Test {
             let littleBytes = value.bytes(endianness: .little)
             let wrongRestore = Double(bytes: littleBytes, endianness: .big)
 
-            // Intentionally wrong endianness should NOT equal original
             #expect(wrongRestore != value, "Mismatched endianness should fail round-trip")
         }
     }
@@ -115,7 +109,6 @@ extension Float.Test {
             let littleBytes = value.bytes(endianness: .little)
             let wrongRestore = Float(bytes: littleBytes, endianness: .big)
 
-            // Intentionally wrong endianness should NOT equal original
             #expect(wrongRestore != value, "Mismatched endianness should fail round-trip")
         }
     }

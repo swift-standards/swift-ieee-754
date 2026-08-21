@@ -1,13 +1,6 @@
-// IEEE_754.NextOperations Tests.swift
-// swift-ieee-754
-//
-// Comprehensive tests for IEEE 754-2019 Section 5.3.1 Next operations
-
 import Testing
 
 @testable import IEEE_754
-
-// MARK: - Double NextOperations Tests
 
 extension IEEE_754.NextOperations {
     @Suite("IEEE_754.NextOperations - Double nextUp")
@@ -170,8 +163,6 @@ extension IEEE_754.NextOperations.Test {
     }
 }
 
-// MARK: - Float NextOperations Tests
-
 extension IEEE_754.NextOperations.Test {
     @Suite("IEEE_754.NextOperations - Float nextUp")
     struct FloatNextUp {
@@ -252,8 +243,6 @@ extension IEEE_754.NextOperations.Test {
         }
     }
 }
-
-// MARK: - Edge Cases
 
 extension IEEE_754.NextOperations.Test {
     @Suite("IEEE_754.NextOperations - Edge Cases")

@@ -1,14 +1,6 @@
-// Stress Tests.swift
-// swift-ieee-754
-//
-// Performance and stress tests for IEEE 754 implementation
-// Tests scalability, consistency under load, and performance characteristics
-
 import Testing
 
 @testable import IEEE_754
-
-// MARK: - Double Performance Tests
 
 extension `Performance Tests` {
     @Suite
@@ -42,7 +34,6 @@ extension `Performance Tests` {
 
             var allValues: [Double] = specialValues
 
-            // Add 9990 random values
             for _ in 0..<9_990 {
                 allValues.append(Double.random(in: -1e200...1e200))
             }
@@ -70,22 +61,18 @@ extension `Performance Tests` {
         func `all API paths 100 times`() {
             let original: Double = 2.718281828459045
 
-            // Path 1: Direct bytes()
             for _ in 0..<100 {
                 _ = original.bytes()
             }
 
-            // Path 2: Namespace bytes()
             for _ in 0..<100 {
                 _ = original.ieee754.bytes()
             }
 
-            // Path 3: [UInt8] init
             for _ in 0..<100 {
                 _ = [UInt8](original)
             }
 
-            // Path 4: Type method
             for _ in 0..<100 {
                 let bytes = original.bytes()
                 _ = Double.ieee754(bytes)
@@ -120,8 +107,6 @@ extension `Performance Tests` {
         }
     }
 }
-
-// MARK: - Float Performance Tests
 
 extension `Performance Tests` {
     @Suite
@@ -185,8 +170,6 @@ extension `Performance Tests` {
     }
 }
 
-// MARK: - Binary64 Authoritative Performance
-
 extension `Performance Tests` {
     @Suite
     struct `Binary64 - Performance` {
@@ -200,14 +183,13 @@ extension `Performance Tests` {
 
         @Test
         func `deserialize 10000 byte arrays via Binary64`() {
-            // Pre-generate byte arrays
+
             var byteArrays: [[UInt8]] = []
             for _ in 0..<10_000 {
                 let value = Double.random(in: -1e100...1e100)
                 byteArrays.append(IEEE_754.Binary64.bytes(from: value))
             }
 
-            // Measure deserialization
             for bytes in byteArrays {
                 _ = IEEE_754.Binary64.value(from: bytes)
             }
@@ -224,8 +206,6 @@ extension `Performance Tests` {
         }
     }
 }
-
-// MARK: - Binary32 Authoritative Performance
 
 extension `Performance Tests` {
     @Suite
@@ -263,8 +243,6 @@ extension `Performance Tests` {
     }
 }
 
-// MARK: - Bit Pattern Stress Tests
-
 extension `Performance Tests` {
     @Suite
     struct `Bit Patterns - Performance` {
@@ -291,8 +269,6 @@ extension `Performance Tests` {
         }
     }
 }
-
-// MARK: - Memory Efficiency Tests
 
 extension `Performance Tests` {
     @Suite
@@ -340,8 +316,6 @@ extension `Performance Tests` {
         }
     }
 }
-
-// MARK: - Concurrent Access Consistency Tests (kept separate, not performance)
 
 extension Double.Test {
     @Suite("IEEE 754 - Concurrent Access Consistency")
@@ -391,8 +365,6 @@ extension Double.Test {
         }
     }
 }
-
-// MARK: - Determinism Tests (kept separate, not performance)
 
 extension Double.Test {
     @Suite("IEEE 754 - Deterministic Behavior")

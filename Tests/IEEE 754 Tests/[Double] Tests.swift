@@ -1,8 +1,3 @@
-// [Double] Tests.swift
-// swift-ieee-754
-//
-// Tests for [Double] array extensions
-
 import Testing
 
 @testable import IEEE_754
@@ -22,9 +17,9 @@ struct `[Double] Tests` {
     @Test
     func `Multiple Doubles from bytes`() {
         let bytes: [UInt8] = [
-            0x6E, 0x86, 0x1B, 0xF0, 0xF9, 0x21, 0x09, 0x40,  // 3.14159
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0x3F,  // 1.0
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40,  // 2.0
+            0x6E, 0x86, 0x1B, 0xF0, 0xF9, 0x21, 0x09, 0x40,
+            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0x3F,
+            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40,
         ]
         let doubles = [Double](bytes: bytes)
         #expect(doubles != nil)
@@ -44,7 +39,7 @@ struct `[Double] Tests` {
 
     @Test
     func `Invalid byte count returns nil`() {
-        // 7 bytes - not a multiple of 8
+
         let bytes: [UInt8] = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]
         let doubles = [Double](bytes: bytes)
         #expect(doubles == nil)
@@ -60,8 +55,8 @@ struct `[Double] Tests` {
     @Test
     func `Big-endian deserialization`() {
         let bytes: [UInt8] = [
-            0x40, 0x09, 0x21, 0xFB, 0x54, 0x44, 0x2D, 0x18,  // 3.141592653589793 (big-endian)
-            0x3F, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // 1.0 (big-endian)
+            0x40, 0x09, 0x21, 0xFB, 0x54, 0x44, 0x2D, 0x18,
+            0x3F, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         ]
         let doubles = [Double](bytes: bytes, endianness: .big)
         #expect(doubles != nil)
@@ -99,7 +94,6 @@ struct `[Double] Tests` {
         #expect(doubles?[0] == 0.0)
         #expect(doubles?[1] == -0.0)
 
-        // Verify sign bit is preserved
         #expect(doubles?[0].sign == .plus)
         #expect(doubles?[1].sign == .minus)
     }
@@ -198,7 +192,6 @@ struct `[Double] Tests` {
         #expect(littleDeserialize == values)
         #expect(bigDeserialize == values)
 
-        // Cross-endianness should not work
         let wrongLittle = [Double](bytes: bigEndianBytes, endianness: .little)
         let wrongBig = [Double](bytes: littleEndianBytes, endianness: .big)
 
@@ -210,7 +203,6 @@ struct `[Double] Tests` {
     func `Array from collection types`() {
         let bytes: [UInt8] = [0x6E, 0x86, 0x1B, 0xF0, 0xF9, 0x21, 0x09, 0x40]
 
-        // Test with different collection types
         let fromArray = [Double](bytes: bytes)
         let fromArraySlice = [Double](bytes: bytes[0...])
         let fromContiguousArray = [Double](bytes: ContiguousArray(bytes))
@@ -237,8 +229,6 @@ struct `[Double] Tests` {
         #expect(deserialized == values)
     }
 }
-
-// MARK: - Performance Tests
 
 extension `Performance Tests` {
     @Suite

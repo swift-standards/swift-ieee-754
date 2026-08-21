@@ -1,14 +1,6 @@
-// EdgeCases Tests.swift
-// swift-ieee-754
-//
-// Brutal edge case tests for IEEE 754 implementation
-// Tests correctness issues that commonly break other libraries
-
 import Testing
 
 @testable import IEEE_754
-
-// MARK: - Double Edge Cases
 
 extension Double.Test {
     @Suite("IEEE 754 - Double Subnormal Numbers")
@@ -41,7 +33,7 @@ extension Double.Test {
         }
 
         @Test func `just below normal threshold`() {
-            // Largest subnormal number (one ULP below leastNormalMagnitude)
+
             let leastNormal = Double.leastNormalMagnitude
             let largestSubnormal = leastNormal.nextDown
 
@@ -132,7 +124,6 @@ extension Double.Test {
             #expect(Double(bytes: bytes2) == nextUp)
             #expect(Double(bytes: bytes3) == nextDown)
 
-            // Verify they're actually adjacent
             #expect(nextDown < value)
             #expect(value < nextUp)
         }
@@ -179,7 +170,6 @@ extension Double.Test {
             let value = Double.greatestFiniteMagnitude
             let bytes = value.bytes()
 
-            // Verify exponent is 2046 (one below 2047 which is infinity/NaN)
             let exponent = (UInt16(bytes[7] & 0x7F) << 4) | (UInt16(bytes[6]) >> 4)
             #expect(exponent == 2046, "Should have exponent 2046")
 
@@ -211,13 +201,12 @@ extension Double.Test {
         }
 
         @Test func `signaling NaN becomes quiet NaN`() {
-            // Signaling NaN: exponent all 1s, significand MSB = 0, other bits non-zero
+
             var bytes: [UInt8] = [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0x7F]
             let value = Double(bytes: bytes)
 
             #expect(value?.isNaN == true, "Signaling NaN should be recognized as NaN")
 
-            // Round-trip it
             let roundTrip = value!.bytes()
             let restored = Double(bytes: roundTrip)
 
@@ -225,11 +214,11 @@ extension Double.Test {
         }
 
         @Test func `NaN with different payloads`() {
-            // Different NaN bit patterns
+
             let nanPatterns: [[UInt8]] = [
-                [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x7F],  // Quiet NaN
-                [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x7F],  // All significand bits set
-                [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x7F],  // Canonical quiet NaN
+                [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x7F],
+                [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x7F],
+                [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x7F],
             ]
 
             for pattern in nanPatterns {
@@ -277,8 +266,6 @@ extension Double.Test {
         }
     }
 }
-
-// MARK: - Float Edge Cases
 
 extension Float.Test {
     @Suite("IEEE 754 - Float Subnormal Numbers")
@@ -349,7 +336,6 @@ extension Float.Test {
             let value = Float.greatestFiniteMagnitude
             let bytes = value.bytes()
 
-            // Verify exponent is 254 (one below 255 which is infinity/NaN)
             let exponent = (UInt16(bytes[3] & 0x7F) << 1) | (UInt16(bytes[2]) >> 7)
             #expect(exponent == 254, "Should have exponent 254")
 
@@ -364,9 +350,9 @@ extension Float.Test {
     struct NaNEdgeCases {
         @Test func `NaN with different payloads`() {
             let nanPatterns: [[UInt8]] = [
-                [0x01, 0x00, 0xC0, 0x7F],  // Quiet NaN
-                [0xFF, 0xFF, 0xFF, 0x7F],  // All significand bits set
-                [0x00, 0x00, 0xC0, 0x7F],  // Canonical quiet NaN
+                [0x01, 0x00, 0xC0, 0x7F],
+                [0xFF, 0xFF, 0xFF, 0x7F],
+                [0x00, 0x00, 0xC0, 0x7F],
             ]
 
             for pattern in nanPatterns {
@@ -379,8 +365,6 @@ extension Float.Test {
         }
     }
 }
-
-// MARK: - Cross-Precision Edge Cases
 
 @Suite("IEEE 754 - Mixed Precision Edge Cases")
 struct MixedPrecisionEdgeCases {
@@ -399,8 +383,6 @@ struct MixedPrecisionEdgeCases {
         #expect(Float(doubleInf) == floatInf, "Double infinity should convert to Float infinity")
     }
 }
-
-// MARK: - Bit Pattern Edge Cases
 
 extension IEEE_754.Binary64.Test {
     @Suite("IEEE 754 - Binary64 Bit Pattern Validation")
@@ -422,7 +404,7 @@ extension IEEE_754.Binary64.Test {
         }
 
         @Test func `max exponent with zero significand is infinity`() {
-            // Positive infinity: exponent = 0x7FF (all 1s), significand = 0
+
             let posInfBytes: [UInt8] = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0x7F]
             let negInfBytes: [UInt8] = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0xFF]
 
@@ -436,7 +418,7 @@ extension IEEE_754.Binary64.Test {
         }
 
         @Test func `max exponent with non-zero significand is NaN`() {
-            // NaN: exponent = 0x7FF, significand ≠ 0
+
             let nanBytes: [UInt8] = [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x7F]
             let value = IEEE_754.Binary64.value(from: nanBytes)
 

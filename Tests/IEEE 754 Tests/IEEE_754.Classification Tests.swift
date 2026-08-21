@@ -1,16 +1,8 @@
-// IEEE_754.Classification Tests.swift
-// swift-ieee-754
-//
-// Comprehensive tests for IEEE 754-2019 Section 5.7 Classification operations
-
 import Testing
 
 @testable import IEEE_754
 
-// Make NumberClass conform to Sendable (retroactive conformance)
 extension IEEE_754.Classification.NumberClass: @unchecked Sendable {}
-
-// MARK: - Double Classification Tests
 
 extension IEEE_754.Classification {
     @Suite("IEEE_754.Classification - Double isSignMinus")
@@ -350,8 +342,6 @@ extension IEEE_754.Classification.Test {
         }
     }
 }
-
-// MARK: - Float Classification Tests
 
 extension IEEE_754.Classification.Test {
     @Suite("IEEE_754.Classification - Float isSignMinus")

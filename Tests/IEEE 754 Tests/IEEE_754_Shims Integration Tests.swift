@@ -1,11 +1,3 @@
-// IEEE_754_Shims Integration Tests.swift
-// swift-ieee-754
-//
-// Integration tests for C target FPU control functions
-
-// The C shim is POSIX/Darwin-only and is not a dependency of this target on
-// Windows; compile these integration tests out there (mirrors the library's
-// IEEE_754_SHIMS gating in Package.swift).
 #if IEEE_754_SHIMS
 
     import IEEE_754_Shims
@@ -13,12 +5,10 @@
 
     @testable import IEEE_754
 
-    // MARK: - Rounding Mode Tests
-
     @Suite("IEEE 754 Shims - Rounding Mode Control")
     struct CIEEERoundingModeTests {
         @Test func `Get Rounding Mode`() {
-            // Should be able to query current rounding mode
+
             let mode = ieee754_get_rounding_mode()
             #expect(
                 mode == IEEE754_ROUND_TONEAREST || mode == IEEE754_ROUND_DOWNWARD
@@ -68,23 +58,19 @@
         }
 
         @Test func `Rounding Mode Affects Operations`() {
-            // Test that rounding mode actually affects operations
+
             let result1 = withRoundingMode(IEEE754_ROUND_TOWARDZERO) {
-                1.0 / 3.0  // Should round toward zero
+                1.0 / 3.0
             }
 
             let result2 = withRoundingMode(IEEE754_ROUND_UPWARD) {
-                1.0 / 3.0  // Should round upward
+                1.0 / 3.0
             }
 
-            // Results should differ (though exact values depend on rounding)
-            // At minimum, verify operations complete
             #expect(result1 > 0)
             #expect(result2 > 0)
         }
     }
-
-    // MARK: - Thread-Local Exception Tests
 
     @Suite("IEEE 754 Shims - Thread-Local Exceptions", .serialized)
     struct CIEEEExceptionTests {
@@ -182,28 +168,23 @@
         }
     }
 
-    // MARK: - Hardware FPU Exception Tests
-
     @Suite("IEEE 754 Shims - Hardware FPU Exceptions")
     struct CIEEEHardwareExceptionTests {
         @Test func `Clear FPU Exceptions`() {
             ieee754_clear_fpu_exceptions()
 
             let exceptions = ieee754_test_fpu_exceptions()
-            // All should be clear (though we can't guarantee initial state)
-            // Just verify the call works
+
             #expect(exceptions.invalid == 0 || exceptions.invalid == 1)
         }
 
         @Test func `FPU Exceptions Structure`() {
             ieee754_clear_fpu_exceptions()
 
-            // Perform an operation that might set exceptions
-            _ = 1.0 / 3.0  // Should set inexact
+            _ = 1.0 / 3.0
 
             let exceptions = ieee754_test_fpu_exceptions()
 
-            // Verify structure is readable
             #expect(exceptions.invalid >= 0 && exceptions.invalid <= 1)
             #expect(exceptions.divByZero >= 0 && exceptions.divByZero <= 1)
             #expect(exceptions.overflow >= 0 && exceptions.overflow <= 1)
@@ -211,8 +192,6 @@
             #expect(exceptions.inexact >= 0 && exceptions.inexact <= 1)
         }
     }
-
-    // MARK: - Signaling Comparison Tests (Double)
 
     @Suite("IEEE 754 Shims - Signaling Comparisons (Double)", .serialized)
     struct CIEEESignalingCompareDoubleTests {
@@ -302,8 +281,6 @@
         }
     }
 
-    // MARK: - Signaling Comparison Tests (Float)
-
     @Suite("IEEE 754 Shims - Signaling Comparisons (Float)", .serialized)
     struct CIEEESignalingCompareFloatTests {
         @Test func `Signaling Equal Normal`() {
@@ -351,22 +328,18 @@
         }
     }
 
-    // MARK: - Integration Tests
-
     @Suite("IEEE 754 Shims - Integration Scenarios")
     struct CIEEEIntegrationTests {
         @Test func `Rounding Mode And Exceptions`() {
-            // Use the combined scoped API for both rounding mode and exceptions
+
             let result = withRoundingModeAndClearedExceptions(IEEE754_ROUND_TOWARDZERO) {
                 let result = 10.0 / 3.0
 
-                // Verify rounding mode is set within scope
                 #expect(ieee754_get_rounding_mode() == IEEE754_ROUND_TOWARDZERO)
 
                 return result
             }
 
-            // Verify result is reasonable
             #expect(result > 3.0 && result < 4.0)
         }
 
@@ -374,13 +347,10 @@
             ieee754_clear_all_exceptions()
             ieee754_raise_exception(IEEE754_EXCEPTION_OVERFLOW)
 
-            // Exception should persist
             #expect(ieee754_test_exception(IEEE754_EXCEPTION_OVERFLOW) == 1)
 
-            // Perform some operations
             _ = 1.0 + 1.0
 
-            // Exception should still be set
             #expect(ieee754_test_exception(IEEE754_EXCEPTION_OVERFLOW) == 1)
 
             ieee754_clear_all_exceptions()
@@ -388,4 +358,4 @@
         }
     }
 
-#endif  // IEEE_754_SHIMS
+#endif

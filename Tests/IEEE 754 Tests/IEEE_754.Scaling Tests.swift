@@ -1,14 +1,7 @@
-// IEEE_754.Scaling Tests.swift
-// swift-ieee-754
-//
-// Comprehensive tests for IEEE 754-2019 Section 5.3 Scaling operations
-
 import Standard_Library_Extensions
 import Testing
 
 @testable import IEEE_754
-
-// MARK: - Double Scaling Tests
 
 extension IEEE_754.Scaling {
     @Suite("IEEE_754.Scaling - Double scaleB")
@@ -55,7 +48,7 @@ extension IEEE_754.Scaling {
         }
 
         @Test func `exact Operation`() {
-            // scaleB should be exact (no rounding) for normal values
+
             let value = 1.23456789
             let scaled = IEEE_754.Scaling.scaleB(value, 5)
             let unscaled = IEEE_754.Scaling.scaleB(scaled, -5)
@@ -188,8 +181,6 @@ extension IEEE_754.Scaling.Test {
     }
 }
 
-// MARK: - Float Scaling Tests
-
 extension IEEE_754.Scaling.Test {
     @Suite("IEEE_754.Scaling - Float scaleB")
     struct FloatScaleB {
@@ -300,8 +291,6 @@ extension IEEE_754.Scaling.Test {
         }
     }
 }
-
-// MARK: - Edge Cases
 
 extension IEEE_754.Scaling.Test {
     @Suite("IEEE_754.Scaling - Edge Cases")

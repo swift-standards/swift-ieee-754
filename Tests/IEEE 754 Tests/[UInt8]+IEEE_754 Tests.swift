@@ -1,8 +1,3 @@
-// [UInt8]+IEEE_754 Tests.swift
-// swift-ieee-754
-//
-// Tests for [UInt8] IEEE 754 extensions
-
 import Testing
 
 @testable import IEEE_754

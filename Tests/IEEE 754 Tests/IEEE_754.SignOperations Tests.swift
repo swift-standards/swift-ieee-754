@@ -1,13 +1,6 @@
-// IEEE_754.SignOperations Tests.swift
-// swift-ieee-754
-//
-// Comprehensive tests for IEEE 754-2019 Section 5.5 Sign Operations
-
 import Testing
 
 @testable import IEEE_754
-
-// MARK: - Double Sign Operations Tests
 
 extension IEEE_754.SignOperations {
     @Suite("IEEE_754.SignOperations - Double negate")
@@ -158,8 +151,6 @@ extension IEEE_754.SignOperations.Test {
     }
 }
 
-// MARK: - Float Sign Operations Tests
-
 extension IEEE_754.SignOperations.Test {
     @Suite("IEEE_754.SignOperations - Float negate")
     struct FloatNegate {
@@ -268,8 +259,6 @@ extension IEEE_754.SignOperations.Test {
         }
     }
 }
-
-// MARK: - Subnormal Sign Operations Tests
 
 extension IEEE_754.SignOperations.Test {
     @Suite("IEEE_754.SignOperations - Subnormal Values")

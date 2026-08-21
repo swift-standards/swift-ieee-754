@@ -1,13 +1,6 @@
-// IEEE_754.MinMax Tests.swift
-// swift-ieee-754
-//
-// Comprehensive tests for IEEE 754-2019 Section 5.3 & 9.6 MinMax operations
-
 import Testing
 
 @testable import IEEE_754
-
-// MARK: - Double MinMax Tests
 
 extension IEEE_754.MinMax {
     @Suite("IEEE_754.MinMax - Double minimum")
@@ -229,8 +222,6 @@ extension IEEE_754.MinMax.Test {
     }
 }
 
-// MARK: - Float MinMax Tests
-
 extension IEEE_754.MinMax.Test {
     @Suite("IEEE_754.MinMax - Float minimum")
     struct FloatMinimum {
@@ -332,8 +323,6 @@ extension IEEE_754.MinMax.Test {
         }
     }
 }
-
-// MARK: - Hierarchical Operation API Tests
 
 extension IEEE_754.MinMax.Test {
     @Suite("IEEE_754.MinMax - Hierarchical Operation API")

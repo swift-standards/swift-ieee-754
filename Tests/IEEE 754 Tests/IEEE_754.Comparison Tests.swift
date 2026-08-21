@@ -1,13 +1,6 @@
-// IEEE_754.Comparison Tests.swift
-// swift-ieee-754
-//
-// Comprehensive tests for IEEE 754-2019 Section 5.6 & 5.10 Comparison operations
-
 import Testing
 
 @testable import IEEE_754
-
-// MARK: - Double Comparison Tests
 
 extension IEEE_754.Comparison {
     @Suite("IEEE_754.Comparison - Double isEqual")
@@ -180,7 +173,7 @@ extension IEEE_754.Comparison.Test {
         }
 
         @Test func `Nan Ordering`() {
-            // NaN values are ordered after all non-NaN values
+
             #expect(
                 !IEEE_754.Comparison.totalOrder(Double.nan, 3.14),
                 "NaN should not be ordered before numbers"
@@ -213,7 +206,7 @@ extension IEEE_754.Comparison.Test {
         }
 
         @Test func `Complete Ordering`() {
-            // totalOrder defines a complete ordering: -NaN < -Inf < -Finite < -0 < +0 < +Finite < +Inf < +NaN
+
             let values: [Double] = [
                 -Double.infinity, -100.0, -1.0, -0.0, 0.0, 1.0, 100.0, Double.infinity,
             ]
@@ -247,8 +240,6 @@ extension IEEE_754.Comparison.Test {
         }
     }
 }
-
-// MARK: - Float Comparison Tests
 
 extension IEEE_754.Comparison.Test {
     @Suite("IEEE_754.Comparison - Float isEqual")
@@ -409,8 +400,6 @@ extension IEEE_754.Comparison.Test {
         }
     }
 }
-
-// MARK: - Hierarchical Predicate API Tests
 
 extension IEEE_754.Comparison.Test {
     @Suite("IEEE_754.Comparison - Hierarchical Predicate API")

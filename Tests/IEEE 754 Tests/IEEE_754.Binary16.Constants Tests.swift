@@ -1,8 +1,3 @@
-// IEEE_754.Binary16.Constants Tests.swift
-// swift-ieee-754
-//
-// Comprehensive tests for Binary16 (Float16) format constants
-
 import Testing
 
 @testable import IEEE_754
