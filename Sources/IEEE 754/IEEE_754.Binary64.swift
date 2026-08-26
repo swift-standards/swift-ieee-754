@@ -1,4 +1,4 @@
-public import Binary_Primitives
+public import Binary
 
 extension IEEE_754 {
 

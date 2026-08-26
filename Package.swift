@@ -19,19 +19,19 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-binary-primitives.git",
+            url: "https://github.com/swift-molecules/swift-binary.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-standard-library-extensions.git",
+            url: "https://github.com/swift-molecules/swift-standard-library-extensions.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-decimal-primitives.git",
+            url: "https://github.com/swift-molecules/swift-decimal.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-dependency-primitives.git",
+            url: "https://github.com/swift-molecules/swift-dependency.git",
             branch: "main"
         ),
     ],
@@ -43,9 +43,9 @@ let package = Package(
         .target(
             name: "IEEE 754",
             dependencies: [
-                .product(name: "Binary Primitives", package: "swift-binary-primitives"),
-                .product(name: "Decimal Primitives", package: "swift-decimal-primitives"),
-                .product(name: "Dependency Primitives", package: "swift-dependency-primitives"),
+                .product(name: "Binary", package: "swift-binary"),
+                .product(name: "Decimal", package: "swift-decimal"),
+                .product(name: "Dependency", package: "swift-dependency"),
                 .target(
                     name: "IEEE 754 Shims",
                     condition: .when(platforms: [.macOS, .linux, .iOS, .tvOS, .watchOS])
