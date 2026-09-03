@@ -62,7 +62,7 @@ let package = Package(
         .testTarget(
             name: "IEEE 754 Tests",
             dependencies: [
-                "IEEE 754",
+                .target(name: "IEEE 754"),
                 .product(
                     name: "Standard Library Extensions",
                     package: "swift-standard-library-extensions"
@@ -83,10 +83,6 @@ let package = Package(
     ],
     swiftLanguageModes: [.v6]
 )
-
-extension String {
-    var tests: Self { self + " Tests" }
-}
 
 for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
     let ecosystem: [SwiftSetting] = [
